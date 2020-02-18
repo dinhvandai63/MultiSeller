@@ -1,4 +1,4 @@
-pragma solidity >=0.4.5;
+pragma solidity  >=0.4.21 <0.6.0;
 import './DepositSeller.sol';
 import './DepositBuyer.sol';
 import './DepositShipper.sol';

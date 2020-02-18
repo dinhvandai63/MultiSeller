@@ -1,4 +1,4 @@
-pragma solidity >=0.4.5;
+pragma solidity  >=0.4.21 <0.6.0;
 contract DepositBuyer {
     address payable public ower;
     address private contract_seller;
@@ -8,24 +8,26 @@ contract DepositBuyer {
         contract_seller = _contract_seller;
     }
     
-    function getEther() public view returns(uint) {
-       return address(this).balance;    
-    }
-
     function getOwer() public view returns(address payable) {
-       return ower;    
+        if(msg.sender==ower || msg.sender==contract_seller){
+            return ower;    
+        }
     }
 
     //refund full money to ower
-    function refundToBuyerTrue() payable public {
-        address(ower).transfer(getEther());
+    function refundToBuyerTrue() payable external {
+        if(msg.sender==contract_seller){
+            address(ower).transfer(address(this).balance);
+        }
     }
     
     //refund full money to ower
-    function refundToBuyerFail(address payable _seller, address payable _shipper) payable public {
-        //send buyer 50%
-        address(_seller).transfer(getEther()/2);
-        //send shipper 50%
-        address(_shipper).transfer(getEther());
+    function refundToBuyerFail(address payable _seller, address payable _shipper) payable external {
+        if(msg.sender == ower && _seller!=0x0000000000000000000000000000000000000000 && _shipper!=0x0000000000000000000000000000000000000000){
+            //send buyer 50%
+            address(_seller).transfer(address(this).balance/2);
+            //send shipper 50%
+            address(_shipper).transfer(address(this).balance);
+        }
     }
 }

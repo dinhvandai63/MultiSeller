@@ -1,4 +1,4 @@
-pragma solidity >=0.4.5;
+pragma solidity  >=0.4.21 <0.6.0;
 contract DepositShipper {
     address payable private ower;
     address private contract_seller;    
