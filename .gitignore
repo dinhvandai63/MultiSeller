@@ -1,5 +1,7 @@
 #build auto create when migrate
 build
+#server
+server
 
 # npm
 node_modules
@@ -18,5 +20,3 @@ out
 out.code
 out.ztf
 packages.json
-#server
-server
