@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>COD</title>
+    <link rel="stylesheet" type="text/css" href="./css/index.css">
+    <script src="./jquery/jquery-3.4.1.min.js"></script>
+
+    <script>
+        $(function () {
+            $("#header_").load("header.html");
+        });
+    </script>
+</head>
+
+<body>
+    <div id="header_"></div>
+    <div id="confirm">
+        <input type="text" id="Confirm_ShipFail" placeholder="code ship packages" style="margin-left: 15px;width: 369px;"/> <br />
+        <div>
+            <input type="button" id="Confirm_btnSellerok" value="seller confirm ok" style="margin-left: 10.9px;margin-top: 11px;"/>
+            <input type="button" id="Confirm_btnSellerFailShipper" value="seller confirm Shipper Fails" style="margin-left: 21px;"/>
+            <input type="button" id="Confirm_btnSellerFailBuyer" value="seller confirm Buyer Fails " style="margin-left: 10.9px;margin-top: 11px;"/>
+        </div>
+        <div>
+            <input type="button" id="Confirm_btnShipperok" value="Shipper confirm ok" style="margin-left: 10.9px;margin-top: 11px;"/>
+            <input type="button" id="Confirm_btnShipperFailBuyer" value="Shipper confirm Buyer Fails" style="margin-left: 21px;"/>
+        </div>
+        <div>
+            <input type="button" id="Confirm_btnBuyerok" value="Buyer confirm ok" style="margin-left: 10.9px;margin-top: 11px;"/>
+            <input type="button" id="Confirm_btnBuyerFailShipper" value="Buyer confirm Shipper Fails" style="margin-left: 21px;"/>
+        </div>
+       
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="dist/bundleConfirm.js"></script>
+</body>
+
+</html>

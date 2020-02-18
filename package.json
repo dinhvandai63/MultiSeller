@@ -1,0 +1,30 @@
+{
+  "name": "cod_zokrates",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/main.js",
+    "dev": "node_modules/.bin/webpack && node server/main.js",
+    "webpack": "node_modules/.bin/webpack --watch"
+  },
+  "author": "D",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "gulp-util": "^3.0.8",
+    "truffle-contract": "^4.0.31",
+    "truffle-security": "^1.7.1",
+    "web3": "^1.2.1"
+  },
+  "devDependencies": {
+    "webpack": "^4.34.0",
+    "webpack-cli": "^3.3.4"
+  }
+}

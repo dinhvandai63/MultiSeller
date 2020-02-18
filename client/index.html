@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>COD</title>
+    <link rel="stylesheet" type="text/css" href="./css/index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- <script src="./jquery/jquery-3.4.1.min.js"></script> -->
+    <!-- <script src="./jquery/AppBuyerDeposit.js" type="text/javascript"></script> -->
+
+    <script>
+        $(function () {
+            $("#header_").load("header.html");
+        });
+    </script>
+</head>
+
+<body>
+    <input type="button" id="btntest" value="test" />
+    <div id="header_"></div>
+    <div id="seller">
+        Name: <input type="text" id="Name" placeholder="Name"  style="margin-left: 8px;"/> <br />
+        Price: <input type="text" id="Price" placeholder="Price" style="margin-left: 14px;"/> <br />
+        Details: <input type="text" id="Details" placeholder="Details" /> <br />
+        <input type="button" id="btnAddPackage" value="Add new Package" />
+        <div id="output"></div>
+        <div id="errorHolder"></div>
+    </div>
+
+    <script src="dist/bundleSeller.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+#build auto create when migrate
+build
+
+# npm
+node_modules
+package-lock.json
+*.log
+*.gz
+
+
+#zksnark file
+proving.key
+verification.key
+witness
+
+#file local
+out
+out.code
+out.ztf
+packages.json
+#server
+server
