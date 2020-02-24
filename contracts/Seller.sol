@@ -1,4 +1,4 @@
-pragma solidity  >=0.4.21 <0.6.0;
+pragma solidity  >=0.5.3;
 import './DepositSeller.sol';
 import './DepositBuyer.sol';
 import './DepositShipper.sol';
@@ -194,7 +194,7 @@ contract Seller{
         //refund buyer
         DepositBuyer(buyer_deposit_temp).refundToBuyerTrue();
         //refund seller
-        address payable seller_temp = DepositSeller(seller_deposit_temp).getOwer();
+        address payable seller_temp = DepositSeller(seller_deposit_temp).getowner();
         DepositShipper(shipper_deposit_temp).refundToShipperAndSellerTrue(seller_temp);
     }
     
@@ -208,7 +208,7 @@ contract Seller{
         //refund buyer
         DepositBuyer(buyer_deposit_temp).refundToBuyerTrue();
         //refund buyer and seller
-        address payable seller_temp = DepositSeller(seller_deposit_temp).getOwer();
+        address payable seller_temp = DepositSeller(seller_deposit_temp).getowner();
         DepositShipper(shipper_deposit_temp).refundToSellerAndBuyerSHF(seller_temp, mapping_buyer[_id]);
     }
     
@@ -218,8 +218,8 @@ contract Seller{
         address payable seller_deposit_temp = mapping_seller_deposit[_id];
         address payable buyer_deposit_temp =  mapping_buyer_deposit[_id];
         address payable shipper_deposit_temp =  mapping_shipper_deposit[_id];
-        address payable seller_temp = DepositSeller(seller_deposit_temp).getOwer();
-        address payable shipper_temp = DepositSeller(shipper_deposit_temp).getOwer();
+        address payable seller_temp = DepositSeller(seller_deposit_temp).getowner();
+        address payable shipper_temp = DepositSeller(shipper_deposit_temp).getowner();
 
         //refund seller
         DepositSeller(seller_deposit_temp).refundToSellerTrue();

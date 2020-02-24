@@ -1,9 +1,9 @@
-pragma solidity  >=0.4.21 <0.6.0;
+pragma solidity  >=0.5.3;
 import './DepositShipper.sol';
 
 contract DepositSeller {
-    //ower is address seller
-    address payable ower;
+    //owner is address seller
+    address payable owner;
     address private contract_seller;    
     // string name;
     // //address_verifyTx is contract verify use Zokrates
@@ -22,7 +22,7 @@ contract DepositSeller {
     
     //_address is address real in the world, ship will tranfer packeage to
     constructor(address _contract_seller) payable public {
-        ower = msg.sender;    
+        owner = msg.sender;    
         contract_seller = _contract_seller;
     }
 
@@ -54,8 +54,8 @@ contract DepositSeller {
        return address(this).balance;    
     }
 
-    function getOwer() public view returns(address payable) {
-       return ower;    
+    function getowner() public view returns(address payable) {
+       return owner;    
     }
 
     // function getName() public view returns(string memory) { 
@@ -65,16 +65,16 @@ contract DepositSeller {
     // //set Id address shipper, and deposit
     // function shipPackage() public returns(bool) {
     //     require(shipper == 0x0000000000000000000000000000000000000000,"Package Shiped");
-    //     require(ower != msg.sender,"seller don't ship package");
+    //     require(owner != msg.sender,"seller don't ship package");
     //     shipper = msg.sender;
     //     return true;    
     // }
-    //refund full money to ower
+    //refund full money to owner
     function refundToSellerTrue() payable public {
-        address(ower).transfer(getEther());
+        address(owner).transfer(getEther());
     }
-    //refund full money to ower Fail
+    //refund full money to owner Fail
     function refundToSellerFail() payable public {
-        address(ower).transfer(getEther());
+        address(owner).transfer(getEther());
     }
 }
