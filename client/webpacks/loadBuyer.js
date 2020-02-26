@@ -335,7 +335,7 @@ AppBuyerDeposit = {
         }).then( async function () { 
             //deposit
             let price_value = (AppBuyerDeposit.price * 5) / 10;
-            await AppBuyerDeposit.contracts.DepositBuyer.new(AppBuyerDeposit.addressMainContract,{ value: price_value, from: AppBuyerDeposit.currentAccount }).then(instance => {
+            await AppBuyerDeposit.contracts.DepositBuyer.new(App.currentAccount, accounts[3],{ value: price_value, from: AppBuyerDeposit.currentAccount }).then(instance => {
                 // console.log("your addresss contract verifier");
                 // console.log(instance.address);
                 AppBuyerDeposit.addressBuyerDeposit = instance.address;
@@ -345,18 +345,6 @@ AppBuyerDeposit = {
             });
         })
     },
-    // buyerDeposit: function (address, price_item) {
-    //     //using account AppBuyerDeposit
-    //     try {
-    //         AppBuyerDeposit.contracts.DepositBuyer.at(address).then(async function (instance) {
-    //             if (AppBuyerDeposit.currentAccount.length) {
-    //                 await instance.sendEther.sendTransaction(address, price_item, { from: App.currentAccount })
-    //             }
-    //         })
-    //     } catch (error) {
-    //         console.log("error buyerDeposit: " + error);
-    //     }
-    // },
     init: async function (_price, _address_main_contract) {
         AppBuyerDeposit.price = _price;
         AppBuyerDeposit.addressMainContract = _address_main_contract;

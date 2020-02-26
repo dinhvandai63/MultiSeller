@@ -1,4 +1,4 @@
-pragma solidity  >=0.5.3;
+pragma solidity  ^0.5.8;
 import './DepositSeller.sol';
 import './DepositBuyer.sol';
 import './DepositShipper.sol';
@@ -99,13 +99,18 @@ contract Seller{
     returns(uint index, string memory _name, uint  _price,string memory _details,
             uint out0, uint out1){
         // require(mapping_buyer[_id] != 0x0000000000000000000000000000000000000000,"Package was not bought"); 
-        return(
-        _id,
-        packages[_id].name,
-        packages[_id].price,
-        packages[_id].details,
-        output_zksnarks[_id].output_0,
-        output_zksnarks[_id].output_1);
+        if(_id<1000000000000000000){
+            return(
+            _id,
+            packages[_id].name,
+            packages[_id].price,
+            packages[_id].details,
+            output_zksnarks[_id].output_0,
+            output_zksnarks[_id].output_1);
+        }else{
+            return(0,"",0,"",0,0);
+        }
+       
     }
 
 
@@ -194,8 +199,7 @@ contract Seller{
         //refund buyer
         DepositBuyer(buyer_deposit_temp).refundToBuyerTrue();
         //refund seller
-        address payable seller_temp = DepositSeller(seller_deposit_temp).getowner();
-        DepositShipper(shipper_deposit_temp).refundToShipperAndSellerTrue(seller_temp);
+        DepositShipper(shipper_deposit_temp).refundToShipperAndSellerTrue();
     }
     
     //run address seller_deposit_to
@@ -208,8 +212,7 @@ contract Seller{
         //refund buyer
         DepositBuyer(buyer_deposit_temp).refundToBuyerTrue();
         //refund buyer and seller
-        address payable seller_temp = DepositSeller(seller_deposit_temp).getowner();
-        DepositShipper(shipper_deposit_temp).refundToSellerAndBuyerSHF(seller_temp, mapping_buyer[_id]);
+        DepositShipper(shipper_deposit_temp).refundToSellerAndBuyerSHF();
     }
     
     
@@ -218,15 +221,14 @@ contract Seller{
         address payable seller_deposit_temp = mapping_seller_deposit[_id];
         address payable buyer_deposit_temp =  mapping_buyer_deposit[_id];
         address payable shipper_deposit_temp =  mapping_shipper_deposit[_id];
-        address payable seller_temp = DepositSeller(seller_deposit_temp).getowner();
-        address payable shipper_temp = DepositSeller(shipper_deposit_temp).getowner();
+
 
         //refund seller
         DepositSeller(seller_deposit_temp).refundToSellerTrue();
         //refund buyer
-        DepositBuyer(buyer_deposit_temp).refundToBuyerFail(seller_temp, shipper_temp);
+        DepositBuyer(buyer_deposit_temp).refundToBuyerFail();
         //refund buyer and seller
-        DepositShipper(shipper_deposit_temp).refundToShipperAndSellerTrue(seller_temp);
+        DepositShipper(shipper_deposit_temp).refundToShipperAndSellerTrue();
     }
     
       

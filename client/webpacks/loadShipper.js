@@ -231,7 +231,7 @@ AppShipperDeposit = {
 
             console.log("in here Shipper deposit: " + price_value);
             console.log("in here Shipper deposit account: " + AppShipperDeposit.currentAccount);
-            AppShipperDeposit.contracts.DepositShipper.new({
+            AppShipperDeposit.contracts.DepositShipper.new(App.currentAccount,  accounts[2],{
                 value: price_value, from: AppShipperDeposit.currentAccount
             }).then(instance => {
                 //instance.address is address contract created
