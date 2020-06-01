@@ -109,7 +109,7 @@ App = {
                     /// update contract Seller
                     App.contracts.Seller.deployed().then(async function (instance) {
                         try {
-                             //deploy verifier
+                            //deploy verifier
                             console.log("1.1 buyer clicked")
                             await AppVerifier.init(true)
                             console.log("1.1 end shappy ended");
@@ -123,7 +123,7 @@ App = {
                             var id_item_temp = App.id_item;
                             var address_verifyTx = AppVerifier.addressVerifier;
                             var address_buyer_deposit = AppBuyerDeposit.addressBuyerDeposit;
-
+                            console.log("nothing change");
                             if (AppBuyerDeposit.currentAccount.length) {
                                 // uint _id,string memory _address, address _address_verifyTx,
                                 // address payable _address_buyer_deposit
@@ -301,6 +301,7 @@ AppBuyerDeposit = {
     web3Provider: null,
     contracts: {},
     currentAccount: {},
+    accountShipper: {},
     addressBuyerDeposit: 0,
     addressMainContract: 0,//Main contract is contract Seller
     price: 0,
@@ -331,11 +332,13 @@ AppBuyerDeposit = {
             }
             console.log("2.4 buyerdeposit initContractBuyerDepositNextStep");
             AppBuyerDeposit.currentAccount = accounts[2];
+            AppBuyerDeposit.accountShipper = accounts[3];
             
         }).then( async function () { 
             //deposit
             let price_value = (AppBuyerDeposit.price * 5) / 10;
-            await AppBuyerDeposit.contracts.DepositBuyer.new(App.currentAccount, accounts[3],{ value: price_value, from: AppBuyerDeposit.currentAccount }).then(instance => {
+
+            await AppBuyerDeposit.contracts.DepositBuyer.new(App.currentAccount, AppBuyerDeposit.accountShipper,{ value: price_value, from: AppBuyerDeposit.currentAccount }).then(instance => {
                 // console.log("your addresss contract verifier");
                 // console.log(instance.address);
                 AppBuyerDeposit.addressBuyerDeposit = instance.address;
