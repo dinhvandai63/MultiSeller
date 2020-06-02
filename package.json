@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "gulp-util": "^3.0.8",
+    "solc": "^0.6.8",
     "truffle-contract": "^4.0.31",
     "truffle-security": "^1.7.1",
     "web3": "^1.2.1"

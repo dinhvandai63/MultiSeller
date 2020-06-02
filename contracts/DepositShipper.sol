@@ -1,4 +1,4 @@
-pragma solidity  ^0.5.8;
+pragma solidity  ^0.6.1;
 contract DepositShipper {
     address payable private owner;
 
@@ -30,8 +30,8 @@ contract DepositShipper {
         // 30% = (value / 130) * 30
         // 30% = value * (30/130)
         balance_to_shipper = (shipper_balance*2307692308)/10000000000;
-        address(owner).transfer(balance_to_shipper);
-        address(seller).transfer(getEther());
+        owner.transfer(balance_to_shipper);
+        seller.transfer(getEther());
     }
     
     //shiper failse
@@ -45,9 +45,9 @@ contract DepositShipper {
         // 30% = (value / 130) * 30
         // 30% = value * (30/130)
         e_to_seller = (shipper_balance*1153846154)/10000000000;
-        address(seller).transfer(e_to_seller);
-        address(buyer).transfer(e_to_seller);
+        seller.transfer(e_to_seller);
+        buyer.transfer(e_to_seller);
 
-        address(owner).transfer(getEther());
+        owner.transfer(getEther());
     }
 }

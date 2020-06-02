@@ -1,4 +1,4 @@
-pragma solidity  ^0.5.8;
+pragma solidity  ^0.6.1;
 contract DepositBuyer {
     address payable public owner;
     address payable private seller;
@@ -17,15 +17,15 @@ contract DepositBuyer {
 
     //refund full money to owner
     function refundToBuyerTrue() payable external {
-        address(owner).transfer(address(this).balance);
+        owner.transfer(address(this).balance);
     }
     
     //refund full money to owner
     function refundToBuyerFail() payable external {
         require(msg.sender==owner, "wrong address");
         //send buyer 50%
-        address(seller).transfer(address(this).balance/2);
+        seller.transfer(address(this).balance/2);
         //send shipper 50%
-        address(shipper).transfer(address(this).balance);
+        shipper.transfer(address(this).balance);
     }
 }

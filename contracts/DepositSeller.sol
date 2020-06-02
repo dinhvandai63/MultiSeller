@@ -1,4 +1,4 @@
-pragma solidity  ^0.5.8;
+pragma solidity  ^0.6.1;
 import './DepositShipper.sol';
 
 contract DepositSeller {
@@ -71,10 +71,10 @@ contract DepositSeller {
     // }
     //refund full money to owner
     function refundToSellerTrue() payable public {
-        address(owner).transfer(getEther());
+        owner.transfer(getEther());
     }
     //refund full money to owner Fail
     function refundToSellerFail() payable public {
-        address(owner).transfer(getEther());
+        owner.transfer(getEther());
     }
 }
