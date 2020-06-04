@@ -11,7 +11,7 @@ contract DepositBuyer {
     }
     
     function getowner() public view returns(address payable) {
-        require(msg.sender==owner);
+        // require(msg.sender==owner);
         return owner;    
     }
 
@@ -22,7 +22,7 @@ contract DepositBuyer {
     
     //refund full money to owner
     function refundToBuyerFail() payable external {
-        require(msg.sender==owner, "wrong address");
+        // require(msg.sender==owner, "wrong address");
         //send buyer 50%
         seller.transfer(address(this).balance/2);
         //send shipper 50%

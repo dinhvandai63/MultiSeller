@@ -23,7 +23,7 @@ contract DepositShipper {
     
     //refund full money to owner, and seller if sesssion successs
     function refundToShipperAndSellerTrue() payable public {
-        require(msg.sender==owner, "wrong address");
+        // require(msg.sender==owner, "wrong address");
         uint balance_to_shipper;
         uint shipper_balance = getEther();
         //caculate 30% deposit send to Shipper from 130% value package,
@@ -36,7 +36,7 @@ contract DepositShipper {
     
     //shiper failse
     function refundToSellerAndBuyerSHF() payable public {
-        require(msg.sender==owner, "wrong address");
+        // require(msg.sender==owner, "wrong address");
         //send to seller
         uint e_to_seller;
         uint shipper_balance = getEther();

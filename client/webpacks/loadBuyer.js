@@ -1,7 +1,6 @@
 var Web3 = require('web3');
 var TruffleContract = require('truffle-contract');
 
-// A $( document ).ready() block.
 App = {
     web3Provider: null,
     contracts: {},
@@ -31,7 +30,6 @@ App = {
     },
     getPackage: function () {
         web3.eth.getAccounts(function (error, accounts) {
-            console.log("2. App.getpackage");
             if (error) {
                 App.showError(error);
             }
@@ -77,15 +75,14 @@ App = {
         }
     },
     buyItem: async function () {
-         //funtion get id package when  user click
-         //this.id is name of id button user just clicked
+        //funtion get id package when  user click
+        //this.id is name of id button user just clicked
         //last character in id is index package
         let id_element = this.id;
         let index_package = id_element[id_element.length-1];
         $name = $('#buyer_Name'+index_package).text();
         $price = $('#buyer_Price'+index_package).text();
         $details = $('#buyer_Details'+index_package).text();
-        console.log("this is value you needed: "+$name+" "+$price+" "+$details);
         var $name_temp = confirm("you buyer Item: " + $name);
         //repair for request
         if ($name_temp) {
@@ -103,16 +100,14 @@ App = {
                     req.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
                     req.send();
                     //receive response from server local, output0, output1
-                    console.log(req.status);
+
                     let obj = JSON.parse(req.responseText);
                    
                     /// update contract Seller
                     App.contracts.Seller.deployed().then(async function (instance) {
                         try {
                             //deploy verifier
-                            console.log("1.1 buyer clicked")
                             await AppVerifier.init(true)
-                            console.log("1.1 end shappy ended");
                             //deploy contract buyer deposit
 
                             var keys = Object.keys(instance);
@@ -123,7 +118,6 @@ App = {
                             var id_item_temp = App.id_item;
                             var address_verifyTx = AppVerifier.addressVerifier;
                             var address_buyer_deposit = AppBuyerDeposit.addressBuyerDeposit;
-                            console.log("nothing change");
                             if (AppBuyerDeposit.currentAccount.length) {
                                 // uint _id,string memory _address, address _address_verifyTx,
                                 // address payable _address_buyer_deposit
@@ -148,7 +142,6 @@ App = {
         }
     },
     init: async function () {
-        console.log( "1. App.init");
         return await App.initWeb3();
     },
     crateFormShowItem: function (total_item) {
@@ -208,21 +201,15 @@ AppVerifier = {
             AppVerifier.web3Provider = web3.currentProvider;
         }
         web3 = new Web3(AppVerifier.web3Provider);
-        console.log("1.3 Appverifier.init");
         return await AppVerifier.initContractVerifier();
     },
     initContractVerifier: async function () {
         await $.getJSON('Verifier.json', function (data) {
-            // console.log(data);
             var VerifierdArtifact = data;
             AppVerifier.contracts.Verifier = TruffleContract(VerifierdArtifact);
             AppVerifier.contracts.Verifier.setProvider(AppVerifier.web3Provider);
-            console.log("1.4 Appverifier.initContractVerifier");
-            console.log(AppVerifier.contracts.Verifier);
         })
-        console.log("1.5 Appverifier.initContractVerifier 115");
         if (AppVerifier.not_new) {
-            console.log("1.6 Appverifier.initContractVerifier ");
             return await AppVerifier.initContractNewVerifier();
         }     
     },
@@ -233,10 +220,7 @@ AppVerifier = {
             }
             AppVerifier.currentAccount = accounts[0];
         }).then( async function () { 
-            console.log("1.7 Appverifier initContractNewVerifier: " + AppVerifier.currentAccount);
             await AppVerifier.contracts.Verifier.new({ from: AppVerifier.currentAccount }).then(instance => {
-                console.log("1.8 create contract verifier success"+instance.address);
-                console.log(instance.address);
                 AppVerifier.addressVerifier = instance.address;
             }).catch(err => {
                 console.log('error', err);
@@ -259,7 +243,6 @@ AppVerifier = {
                             console.log(error);
                     });
                 }
-                console.log("you in check sattus ");
             }).catch(err => {
                 console.log('error', err);
             });
@@ -279,7 +262,6 @@ AppVerifier = {
                     status = await instance.verifyTx.call(a, b, c, input, { from: AppVerifier.currentAccount })
                     await alert("this status verifiTx: " + status);
                 }
-                console.log("this status verifiTX: ");
                 console.log(status);
 
             }).catch(err => {
@@ -291,7 +273,6 @@ AppVerifier = {
     //false is not create
     init: async function (_new_or_not) {
         AppVerifier.not_new = _new_or_not;
-        console.log("1.2 Appverifier.init" + _new_or_not);
         return await AppVerifier.initWeb3();
     }
 }
@@ -313,12 +294,10 @@ AppBuyerDeposit = {
             AppBuyerDeposit.web3Provider = web3.currentProvider;
         }
         web3 = new Web3(AppBuyerDeposit.web3Provider);
-        console.log("2.2 buyerdeposit initweb3");
         return await AppBuyerDeposit.initContractBuyerDeposit();
     },
     initContractBuyerDeposit: async function () {
         await $.getJSON('DepositBuyer.json', function (data) {
-            console.log("2.3 buyerdeposit initContractBuyerDeposit");
             var BuyerDepositArtifact = data;
             AppBuyerDeposit.contracts.DepositBuyer = TruffleContract(BuyerDepositArtifact);
             AppBuyerDeposit.contracts.DepositBuyer.setProvider(AppBuyerDeposit.web3Provider);
@@ -330,7 +309,7 @@ AppBuyerDeposit = {
             if (error) {
                 console.log(error);
             }
-            console.log("2.4 buyerdeposit initContractBuyerDepositNextStep");
+            //@account currne must is seller
             AppBuyerDeposit.currentAccount = accounts[2];
             AppBuyerDeposit.accountShipper = accounts[3];
             
@@ -339,10 +318,7 @@ AppBuyerDeposit = {
             let price_value = (AppBuyerDeposit.price * 5) / 10;
 
             await AppBuyerDeposit.contracts.DepositBuyer.new(App.currentAccount, AppBuyerDeposit.accountShipper,{ value: price_value, from: AppBuyerDeposit.currentAccount }).then(instance => {
-                // console.log("your addresss contract verifier");
-                // console.log(instance.address);
                 AppBuyerDeposit.addressBuyerDeposit = instance.address;
-                console.log("2.5 buyerdeposit anything awesome!");
             }).catch(err => {
                 console.log('error', err);
             });
@@ -351,7 +327,6 @@ AppBuyerDeposit = {
     init: async function (_price, _address_main_contract) {
         AppBuyerDeposit.price = _price;
         AppBuyerDeposit.addressMainContract = _address_main_contract;
-        console.log("2.1 buyer deposit");
         return await AppBuyerDeposit.initWeb3();
 
     }

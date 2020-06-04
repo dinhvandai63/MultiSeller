@@ -30,7 +30,6 @@ App = {
     },
     getPackageShip: function () {
         web3.eth.getAccounts(function (error, accounts) {
-            console.log("2. App.getpackage");
             if (error) {
                 App.showError(error);
             }
@@ -127,7 +126,6 @@ App = {
         await App.contracts.Seller.deployed().then(async function (instance) {
             if (App.currentAccount.length) {
                 await instance.getAddressVerifier.call(index_package, { from: App.currentAccount }).then(async function (instance) {
-                    console.log("step 2")
                     App.address_verifier_p = instance; 
                     await AppVerifier.watchStatus(instance);                
                 })
@@ -135,7 +133,6 @@ App = {
         })
     },
     init: async function () {
-        console.log( "1. App.init");
         return await App.initWeb3();
     },
     createFormShowItem: function (packages) {
@@ -216,7 +213,6 @@ AppShipperDeposit = {
             AppShipperDeposit.contracts.DepositShipper.setProvider(AppShipperDeposit.web3Provider);
         })
         if (AppShipperDeposit.app_deposit) {
-            console.log("in app deposit: " + AppShipperDeposit.app_deposit);
             return await AppShipperDeposit.initContractShipperDepositNextStep();
         }
     },
@@ -229,15 +225,10 @@ AppShipperDeposit = {
             AppShipperDeposit.currentAccount = accounts[3];
             let price_value = (AppShipperDeposit.price * 13)/10;
 
-            console.log("in here Shipper deposit: " + price_value);
-            console.log("in here Shipper deposit account: " + AppShipperDeposit.currentAccount);
             AppShipperDeposit.contracts.DepositShipper.new(App.currentAccount,  accounts[2],{
                 value: price_value, from: AppShipperDeposit.currentAccount
             }).then(instance => {
-                //instance.address is address contract created
                 AppShipperDeposit.addressShipperDeposit = instance.address;
-                console.log("contract seller deposit: " + instance.address);
-                console.log("id package: "+ AppShipperDeposit.id);
                 //set address shipper deposit
                 App.setShipperDeposit(AppShipperDeposit.id, instance.address)
             }).catch(err => {
@@ -271,14 +262,11 @@ AppVerifier = {
         else {
             AppVerifier.web3Provider = web3.currentProvider;
         }
-        console.log("thi initweb3 111");
         web3 = new Web3(AppVerifier.web3Provider);
         return await AppVerifier.initContractVerifier();
     },
     initContractVerifier: async function () {
         await $.getJSON('Verifier.json', function (data) {
-            console.log("this api verifier: 1");
-            console.log("thi initcontractVerifier 112");
             var VerifierdArtifact = data;
             json_api = data;
             AppVerifier.contracts.Verifier = TruffleContract(VerifierdArtifact);
@@ -286,9 +274,6 @@ AppVerifier = {
         })
         
         if (!AppVerifier.not_new) {
-            console.log("init contract verifier");
-            // console.log("thi initcontractVerifier 113");
-
             return await AppVerifier.initContractNewVerifier();
         }
        
@@ -299,10 +284,7 @@ AppVerifier = {
                 console.log("get account in verifier false" + error);
             }
             AppVerifier.currentAccount = accounts[0];
-            console.log("initContractNewVerifier " + AppVerifier.currentAccount);
             AppVerifier.contracts.Verifier.new({ from: AppVerifier.currentAccount }).then(instance => {
-                console.log("your addresss contract verifier");
-                console.log(instance.address);
                 AppVerifier.addressVerifier = instance.address;
             }).catch(err => {
                 console.log('error', err);
@@ -310,29 +292,20 @@ AppVerifier = {
         })
     },
     watchStatus: async function (address_verifier) {
-        console.log("watchStatus is collecd ste 7: ");
         await AppVerifier.init(true);
         web3.eth.getAccounts(async function (error, accounts) {
             if (error) {
                 console.log(error);
             }
-            console.log("watchStatus is collecd 8:");
             AppVerifier.currentAccount = accounts[3];
             AppVerifier.contracts.Verifier.at(address_verifier).then(async function (instance) {
                 if (AppVerifier.currentAccount.length) {
-                    console.log("current Account 9: ");
                     await $.getJSON('Verifier.json', function (data) {
-                        console.log("this api verifier: ");
-                        console.log("thi initcontractVerifier 10: get json and instance");
                         web3socket = new Web3(new Web3.providers.WebsocketProvider("ws://127.0.0.1:7545"));
                         contract =new web3socket.eth.Contract(data["abi"],instance.address);
-                        console.log("that instance");
-                        console.log(instance.address)
-                        console.log("event from contract verifier: ~~~~~~~~~listen");
                         var track = contract.events.Verified((err, result)=>{
                             console.log(result)
                         })
-                        console.log(track)
                     })
                 }
             }).catch(err => {
@@ -344,7 +317,6 @@ AppVerifier = {
     //true is not create
     init: async function (_new_or_not) {
         AppVerifier.not_new = _new_or_not;
-        console.log("110 in here verifier~: " + _new_or_not);
         return await AppVerifier.initWeb3();
     }
 }

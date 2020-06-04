@@ -232,7 +232,7 @@ contract Seller{
     }
     
       
-     //get flag buyer
+    //get flag buyer
     // function getFlagBuyer(uint _id) public view returns(memory string value){
     //     return flag_buyer[_id];
     // }
@@ -247,7 +247,7 @@ contract Seller{
         }else if(flag_buyer[_id]==2 && flag_seller[_id]==2){
             runRefundShipperFail(_id);
         }else if(flag_shipper[_id]==3 && flag_seller[_id]==3){
-            runRefundShipperFail(_id);
+            runRefundBuyerFail(_id);
         }    
     }
 
@@ -266,7 +266,7 @@ contract Seller{
         }else if(flag_buyer[_id]==2 && flag_seller[_id]==2){
             runRefundShipperFail(_id);
         }else if(flag_shipper[_id]==3 && flag_seller[_id]==3){
-            runRefundShipperFail(_id);
+            runRefundBuyerFail(_id);
         }       
     }
 
@@ -285,7 +285,7 @@ contract Seller{
         }else if(flag_buyer[_id]==2 && flag_seller[_id]==2){
             runRefundShipperFail(_id);
         }else if(flag_shipper[_id]==3 && flag_seller[_id]==3){
-            runRefundShipperFail(_id);
+            runRefundBuyerFail(_id);
         }       
     }
 

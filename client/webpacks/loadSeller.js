@@ -100,7 +100,6 @@ App = {
                         App.package_verifier_p = instance;                 
                     })
                     await instance.getAddressVerifier.call(index, { from: App.currentAccount }).then(async function (instance) {
-                        console.log("step 2")
                         App.address_verifier_p = instance;                 
                     })
                 }
@@ -326,7 +325,7 @@ App = {
                         await instance.setSellerDepositAddress.sendTransaction(
                             index_package,
                             seller_deposit_address,
-                            { from: App.currentAccount }).then(alert("confirm success!"));
+                            { from: AppSellerDeposit.currentAccount }).then(alert("confirm success!"));
                     }
                 } catch (error) {
                     console.log("errror when update conract in confirm sell: " + error);
@@ -461,12 +460,9 @@ AppSellerDeposit = {
             await AppSellerDeposit.contracts.DepositSeller.new(AppSellerDeposit.address_contract_seller,{
                 value: price_value, from: AppSellerDeposit.currentAccount
             }).then(instance => {
-                console.log("4.6 initContractSellerDepositNextStep 2");
                 //instance.address is address contract created
                 AppSellerDeposit.addressSellerDeposit = instance.address;
                 //set value for contract seller deposit  
-                console.log("contract seller deposit: " + instance.address);
-                console.log();
                 // instance.setValueFirst.sendTransaction(
                 //     AppSellerDeposit.name_item,
                 //     AppSellerDeposit.price,
@@ -483,15 +479,13 @@ AppSellerDeposit = {
             if (error) {
                 console.log(error);
             }
-            AppSellerDeposit.currentAccount = accounts[0];
+            AppSellerDeposit.currentAccount = accounts[1];
             try {
-                console.log("App.addressSellerDeposit: "+App.address_seller_deposit_p);
                 AppSellerDeposit.contracts.DepositSeller.at(App.address_seller_deposit_p).then(async function (instance) {
                     let packages = [];
                     if (AppSellerDeposit.currentAccount.length) {
                         packages = await instance.getPackage.call({ from: AppSellerDeposit.currentAccount });
                     }
-                    console.log("this getpackage ship: "+packages[0]+" ~ "+packages[2]);
                     App.showPackageShip(packages);
                 })
             } catch (error) {
@@ -511,7 +505,6 @@ AppSellerDeposit = {
                     let status;
                     if (App.currentAccount.length) {
                         status = await instance.setAddressShipperDeposit.sendTransaction(AppShipperDeposit.addressShipperDeposit, { from: AppShipperDeposit.currentAccount });
-                        console.log("update setaddress shipper deposit in contract seller deposit " + status.receipt.status);
                     }
                 })
             } catch (error) {
@@ -526,7 +519,7 @@ AppSellerDeposit = {
         AppSellerDeposit.price = _price;
         AppSellerDeposit.app_not_deposit = false;
         AppSellerDeposit.address_contract_seller = _address_contract_seller;
-        console.log("4.1 sthis step");
+
         return await AppSellerDeposit.initWeb3();
 
     },
@@ -553,14 +546,11 @@ AppVerifier = {
         else {
             AppVerifier.web3Provider = web3.currentProvider;
         }
-        console.log("thi initweb3 111");
         web3 = new Web3(AppVerifier.web3Provider);
         return await AppVerifier.initContractVerifier();
     },
     initContractVerifier: async function () {
         await $.getJSON('Verifier.json', function (data) {
-            console.log("this api verifier: 1");
-            console.log("thi initcontractVerifier 112");
             var VerifierdArtifact = data;
             json_api = data;
             AppVerifier.contracts.Verifier = TruffleContract(VerifierdArtifact);
@@ -568,7 +558,6 @@ AppVerifier = {
         })
         
         if (!AppVerifier.not_new) {
-            console.log("init contract verifier");
             return await AppVerifier.initContractNewVerifier();
         }
     },
@@ -578,10 +567,7 @@ AppVerifier = {
                 console.log("get account in verifier false" + error);
             }
             AppVerifier.currentAccount = accounts[0];
-            console.log("initContractNewVerifier " + AppVerifier.currentAccount);
             AppVerifier.contracts.Verifier.new({ from: AppVerifier.currentAccount }).then(instance => {
-                console.log("your addresss contract verifier");
-                console.log(instance.address);
                 AppVerifier.addressVerifier = instance.address;
             }).catch(err => {
                 console.log('error', err);
@@ -596,7 +582,6 @@ AppVerifier = {
             }
             AppVerifier.currentAccount = accounts[0];
             AppVerifier.contracts.Verifier.at(address_verifier).then(async function (instance) {
-                console.log("thi initcontractVerifier 113");
                 if (AppVerifier.currentAccount.length) {
                     let status = instance.verifyTx.call(a, b, c, input, { from: AppVerifier.currentAccount })
                     status.then(
@@ -620,7 +605,6 @@ AppVerifier = {
     //true is not create
     init: async function (_new_or_not) {
         AppVerifier.not_new = _new_or_not;
-        console.log("110 in here verifier~: " + _new_or_not);
         return await AppVerifier.initWeb3();
     }
 }

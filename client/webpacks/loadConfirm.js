@@ -182,7 +182,6 @@ App = {
     },
     
     init: async function () {
-        console.log( "1. App.init");
         return await App.initWeb3();
     },
 }
