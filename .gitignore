@@ -20,5 +20,5 @@ out
 out.code
 out.ztf
 packages.json
-client/webpacks
+client/dist
 proof.json
