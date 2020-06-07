@@ -1,7 +1,7 @@
 #build auto create when migrate
 build
 #server
-server
+
 
 # npm
 node_modules
