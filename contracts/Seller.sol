@@ -87,12 +87,7 @@ contract Seller{
             packages[_id].details
             );
         else
-            return(
-            0,
-            "",
-            0,
-            "",
-            "");
+            return(0, "", 0, "", "");
     }
     //get package for verify
     function getPackageVerifier(uint _id) onlySeller public view 
@@ -232,7 +227,7 @@ contract Seller{
     }
     
       
-    //get flag buyer
+     //get flag buyer
     // function getFlagBuyer(uint _id) public view returns(memory string value){
     //     return flag_buyer[_id];
     // }

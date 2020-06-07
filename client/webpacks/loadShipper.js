@@ -109,7 +109,9 @@ App = {
         App.contracts.Seller.deployed().then(async function (instance) {
             try {
                 package = await instance.setShipperDepositAddress.sendTransaction(_id, _address, {  from: App.currentAccount  });
+                console.log("address deposit shipper:", _address)
                 alert("set deposit: "+$name+" success!")
+
             } catch (err) {
                 console.log("errror when update conract: " + err);
             }
@@ -225,9 +227,11 @@ AppShipperDeposit = {
             AppShipperDeposit.currentAccount = accounts[3];
             let price_value = (AppShipperDeposit.price * 13)/10;
 
-            AppShipperDeposit.contracts.DepositShipper.new(App.currentAccount,  accounts[2],{
+            AppShipperDeposit.contracts.DepositShipper.new( accounts[1],  accounts[2],{
                 value: price_value, from: AppShipperDeposit.currentAccount
             }).then(instance => {
+                console.log("shipper depost: ",  accounts[1],  accounts[2], AppShipperDeposit.currentAccount);
+                console.log("shipper depost address: ", instance.address);
                 AppShipperDeposit.addressShipperDeposit = instance.address;
                 //set address shipper deposit
                 App.setShipperDeposit(AppShipperDeposit.id, instance.address)

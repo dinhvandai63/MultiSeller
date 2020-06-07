@@ -121,6 +121,13 @@ App = {
                             if (AppBuyerDeposit.currentAccount.length) {
                                 // uint _id,string memory _address, address _address_verifyTx,
                                 // address payable _address_buyer_deposit
+                                console.log("buyerItem infor:",id_item_temp,
+                                    add_delivery,
+                                    address_verifyTx,
+                                    address_buyer_deposit,
+                                    output0,
+                                    output1,
+                                    AppBuyerDeposit.currentAccount);
                                 await instance.buyItem.sendTransaction(
                                     id_item_temp,
                                     add_delivery,
@@ -283,6 +290,7 @@ AppBuyerDeposit = {
     contracts: {},
     currentAccount: {},
     accountShipper: {},
+    accountSeller: {},
     addressBuyerDeposit: 0,
     addressMainContract: 0,//Main contract is contract Seller
     price: 0,
@@ -309,15 +317,15 @@ AppBuyerDeposit = {
             if (error) {
                 console.log(error);
             }
-            //@account currne must is seller
+            AppBuyerDeposit.accountSeller = accounts[1];
             AppBuyerDeposit.currentAccount = accounts[2];
             AppBuyerDeposit.accountShipper = accounts[3];
             
         }).then( async function () { 
             //deposit
             let price_value = (AppBuyerDeposit.price * 5) / 10;
-
-            await AppBuyerDeposit.contracts.DepositBuyer.new(App.currentAccount, AppBuyerDeposit.accountShipper,{ value: price_value, from: AppBuyerDeposit.currentAccount }).then(instance => {
+            console.log("deposti buyer: ", App.currentAccount, AppBuyerDeposit.accountShipper, AppBuyerDeposit.currentAccount)
+            await AppBuyerDeposit.contracts.DepositBuyer.new(AppBuyerDeposit.accountSeller, AppBuyerDeposit.accountShipper,{ value: price_value, from: AppBuyerDeposit.currentAccount }).then(instance => {
                 AppBuyerDeposit.addressBuyerDeposit = instance.address;
             }).catch(err => {
                 console.log('error', err);

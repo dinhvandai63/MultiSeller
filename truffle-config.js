@@ -48,7 +48,8 @@ module.exports = {
     ganache: {
       host: 'localhost',
       port: 7545,
-      gas: 9721975,
+      gasPrice: 100000000000,
+      gas: 3000000000,
       network_id: '*',
     },
     // development: {
@@ -97,10 +98,10 @@ module.exports = {
       version: "0.6.1",    // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
-      //  optimizer: {
-      //    enabled: false,
-      //    runs: 200
-      //  },
+       optimizer: {
+         enabled: true,
+         runs: 200
+       },
       //  evmVersion: "byzantium"
       // }
     }

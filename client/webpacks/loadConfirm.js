@@ -47,7 +47,8 @@ App = {
             App.currentAccount = accounts[0];
             App.contracts.Seller.deployed().then(async function (instance) {
                 //save save package in contract
-                await instance.setFlagSeller.sendTransaction($name, 1, { from: App.currentAccount })
+                //!@!@!@!@
+                await instance.setFlagSeller.sendTransaction($name, 1 { from: App.currentAccount })
                alert($name);
             }).then(function (result) {
                 // App.showMessage('Saved Successfully');
@@ -67,7 +68,7 @@ App = {
             App.currentAccount = accounts[0];
             App.contracts.Seller.deployed().then(async function (instance) {
                 //save save package in contract
-                await instance.setFlagSeller.sendTransaction($name, 2, { from: App.currentAccount })
+            await instance.setFlagSeller.sendTransaction($name, 2, { from: App.currentAccount })
                alert($name);
             }).then(function (result) {
                 // App.showMessage('Saved Successfully');

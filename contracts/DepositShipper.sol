@@ -1,20 +1,19 @@
 pragma solidity  ^0.6.1;
 contract DepositShipper {
-    address payable private owner;
-
-    address payable private seller;    
-
-    address payable private buyer;  
-
-
+    address payable public owner;
+    address payable public seller;    
+    address payable public buyer;  
+    mapping (address => uint) public balances;
+    
     constructor(address payable _seller, address payable _buyer) payable public {
         owner = msg.sender;
         seller = _seller;
         buyer = _buyer;
+        balances[msg.sender] = msg.value;
     }
     
     function getEther() public view returns(uint) {
-       return address(this).balance;    
+       return balances[owner];    
     }
     //return address owner
     function getOwer() public view returns(address payable) {
@@ -29,7 +28,8 @@ contract DepositShipper {
         //caculate 30% deposit send to Shipper from 130% value package,
         // 30% = (value / 130) * 30
         // 30% = value * (30/130)
-        balance_to_shipper = (shipper_balance*2307692308)/10000000000;
+        balance_to_shipper = (shipper_balance*30)/130;
+        balances[owner] -= balance_to_shipper;
         owner.transfer(balance_to_shipper);
         seller.transfer(getEther());
     }
@@ -44,10 +44,13 @@ contract DepositShipper {
         //caculate 30% deposit send to Shipper from 130% value package,
         // 30% = (value / 130) * 30
         // 30% = value * (30/130)
-        e_to_seller = (shipper_balance*1153846154)/10000000000;
+        e_to_seller = (shipper_balance*15)/130;
+        
+        
         seller.transfer(e_to_seller);
+        balances[owner] -= e_to_seller;
         buyer.transfer(e_to_seller);
-
+        balances[owner] -= e_to_seller;
         owner.transfer(getEther());
     }
 }

@@ -462,6 +462,7 @@ AppSellerDeposit = {
             }).then(instance => {
                 //instance.address is address contract created
                 AppSellerDeposit.addressSellerDeposit = instance.address;
+                console.log("seller deposit: ", AppSellerDeposit.address_contract_seller, AppSellerDeposit.currentAccount)
                 //set value for contract seller deposit  
                 // instance.setValueFirst.sendTransaction(
                 //     AppSellerDeposit.name_item,
@@ -493,25 +494,25 @@ AppSellerDeposit = {
             }
         })
     },
-    setAddressShipperDeposit: async function () {
-        web3.eth.getAccounts(function (error, accounts) {
-            if (error) {
-                console.log(error);
-            }
-            //make sure account set address shipper deposit is account[3]
-            AppShipperDeposit.currentAccount = accounts[3];
-            try {
-                AppSellerDeposit.contracts.DepositSeller.at(App.address_seller_deposit_p).then(async function (instance) {
-                    let status;
-                    if (App.currentAccount.length) {
-                        status = await instance.setAddressShipperDeposit.sendTransaction(AppShipperDeposit.addressShipperDeposit, { from: AppShipperDeposit.currentAccount });
-                    }
-                })
-            } catch (error) {
-                console.log("error getPackageShip: " + error);
-            }
-        })
-    },
+    // setAddressShipperDeposit: async function () {
+    //     web3.eth.getAccounts(function (error, accounts) {
+    //         if (error) {
+    //             console.log(error);
+    //         }
+    //         //make sure account set address shipper deposit is account[3]
+    //         AppShipperDeposit.currentAccount = accounts[3];
+    //         try {
+    //             AppSellerDeposit.contracts.DepositSeller.at(App.address_seller_deposit_p).then(async function (instance) {
+    //                 let status;
+    //                 if (App.currentAccount.length) {
+    //                     status = await instance.setAddressShipperDeposit.sendTransaction(AppShipperDeposit.addressShipperDeposit, { from: AppShipperDeposit.currentAccount });
+    //                 }
+    //             })
+    //         } catch (error) {
+    //             console.log("error getPackageShip: " + error);
+    //         }
+    //     })
+    // },
     //string memory _name, string memory _name_item,
     // uint _price, string memory _address,address _address_verifyTx
     //_address is address will dilivery in the real world
