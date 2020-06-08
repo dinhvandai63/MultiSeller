@@ -33,7 +33,7 @@ App = {
             if (error) {
                 App.showError(error);
             }
-            App.currentAccount = accounts[0];
+            App.currentAccount = accounts[2];
             try {
                 App.contracts.Seller.deployed().then(async function (instance) {
                     //content information of package
@@ -225,52 +225,10 @@ AppVerifier = {
             if (error) {
                 console.log("get account in verifier false" + error);
             }
-            AppVerifier.currentAccount = accounts[0];
+            AppVerifier.currentAccount = accounts[2];
         }).then( async function () { 
             await AppVerifier.contracts.Verifier.new({ from: AppVerifier.currentAccount }).then(instance => {
                 AppVerifier.addressVerifier = instance.address;
-            }).catch(err => {
-                console.log('error', err);
-            });
-        })
-    },
-    watchStatus: async function () {
-        AppVerifier.init(true);
-        web3.eth.getAccounts(function (error, accounts) {
-            if (error) {
-                console.log(error);
-            }
-            AppVerifier.currentAccount = accounts[3];
-            AppVerifier.contracts.Verifier.at(App.address_verifier_p).then(async function (instance) {
-                if (AppVerifier.currentAccount.length) {
-                    await instance.Verified.call(function (error, result) {
-                        if (!error) {
-                            $("#status_verifier").html(result[0] + ' yeah old :)');
-                        } else
-                            console.log(error);
-                    });
-                }
-            }).catch(err => {
-                console.log('error', err);
-            });
-        })
-    },
-    runVerifyTx: async function (address_verifier, a, b, c, input) {
-        AppVerifier.init(true);
-        await sleep(1300);
-        web3.eth.getAccounts(function (error, accounts) {
-            if (error) {
-                console.log(error);
-            }
-            AppVerifier.currentAccount = accounts[0];
-            AppVerifier.contracts.Verifier.at(address_verifier).then(async function (instance) {
-                let status;
-                if (AppVerifier.currentAccount.length) {
-                    status = await instance.verifyTx.call(a, b, c, input, { from: AppVerifier.currentAccount })
-                    await alert("this status verifiTx: " + status);
-                }
-                console.log(status);
-
             }).catch(err => {
                 console.log('error', err);
             });
@@ -342,6 +300,6 @@ AppBuyerDeposit = {
 $(function () {
     $(window).load(function () {
         console.log( "ready 2!" );
-        App.init();   
+        App.init(); 
     });
 });

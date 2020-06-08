@@ -52,7 +52,7 @@ App = {
             if (error) {
                 App.showError(error);
             }
-            App.currentAccount = accounts[0];
+            App.currentAccount = accounts[1];
             try {
                 App.contracts.Seller.deployed().then(async function (instance) {
                     if (App.currentAccount.length) {
@@ -72,7 +72,7 @@ App = {
             if (error) {
                 App.showError(error);
             }
-            App.currentAccount = accounts[0];
+            App.currentAccount = accounts[1];
             try {
                 App.contracts.Seller.deployed().then(async function (instance) {
                     let packages = [];
@@ -115,7 +115,7 @@ App = {
             if (error) {
                 App.showError(error);
             }
-            App.currentAccount = accounts[0];
+            App.currentAccount = accounts[1];
             try {
                 App.contracts.Seller.deployed().then(async function (instance) {
                     //content information of package
@@ -185,7 +185,7 @@ App = {
                 if (error) {
                     App.showError(error);
                 }
-                App.currentAccount = accounts[0];
+                App.currentAccount = accounts[1];
                 App.contracts.Seller.deployed().then(async function (instance) {
                     //save save package in contract
                     await instance.setPackage.sendTransaction($name, $price, $details, { from: App.currentAccount })
@@ -230,7 +230,7 @@ App = {
             if (error) {
                 App.showError(error);
             }
-            App.currentAccount = accounts[0];
+            App.currentAccount = accounts[1];
             App.contracts.Seller.deployed().then(async function (instance) {
                 await instance.setShipperOwner.sendTransaction(_id, { from: App.currentAccount })
             }).catch(function (error) {
@@ -494,25 +494,6 @@ AppSellerDeposit = {
             }
         })
     },
-    // setAddressShipperDeposit: async function () {
-    //     web3.eth.getAccounts(function (error, accounts) {
-    //         if (error) {
-    //             console.log(error);
-    //         }
-    //         //make sure account set address shipper deposit is account[3]
-    //         AppShipperDeposit.currentAccount = accounts[3];
-    //         try {
-    //             AppSellerDeposit.contracts.DepositSeller.at(App.address_seller_deposit_p).then(async function (instance) {
-    //                 let status;
-    //                 if (App.currentAccount.length) {
-    //                     status = await instance.setAddressShipperDeposit.sendTransaction(AppShipperDeposit.addressShipperDeposit, { from: AppShipperDeposit.currentAccount });
-    //                 }
-    //             })
-    //         } catch (error) {
-    //             console.log("error getPackageShip: " + error);
-    //         }
-    //     })
-    // },
     //string memory _name, string memory _name_item,
     // uint _price, string memory _address,address _address_verifyTx
     //_address is address will dilivery in the real world
@@ -567,7 +548,7 @@ AppVerifier = {
             if (error) {
                 console.log("get account in verifier false" + error);
             }
-            AppVerifier.currentAccount = accounts[0];
+            AppVerifier.currentAccount = accounts[1];
             AppVerifier.contracts.Verifier.new({ from: AppVerifier.currentAccount }).then(instance => {
                 AppVerifier.addressVerifier = instance.address;
             }).catch(err => {
@@ -581,7 +562,7 @@ AppVerifier = {
             if (error) {
                 console.log(error);
             }
-            AppVerifier.currentAccount = accounts[0];
+            AppVerifier.currentAccount = accounts[1];
             AppVerifier.contracts.Verifier.at(address_verifier).then(async function (instance) {
                 if (AppVerifier.currentAccount.length) {
                     let status = instance.verifyTx.call(a, b, c, input, { from: AppVerifier.currentAccount })
