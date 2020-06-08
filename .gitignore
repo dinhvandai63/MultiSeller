@@ -22,3 +22,7 @@ out.ztf
 packages.json
 client/dist/*
 proof.json
+
+#test
+test/*
+webpacks/index.js
