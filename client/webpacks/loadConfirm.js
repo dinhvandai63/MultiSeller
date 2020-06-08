@@ -38,151 +38,30 @@ App = {
 
         $('#Confirm_btnShipperok').click(App.Confirm_btnShipperok);
         $('#Confirm_btnShipperFailBuyer').click(App.Confirm_btnShipperFailBuyer);
+        
         $('#Confirm_btnBuyerok').click(App.Confirm_btnBuyerok);
         $('#Confirm_btnBuyerFailShipper').click(App.Confirm_btnBuyerFailShipper);
     },
     Confirm_btnSellerok: async function () {
-        $name = $('#Confirm_ShipFail').val();
-        web3.eth.getAccounts(function (error, accounts) {
-            if (error) {
-                console.log("error"+error);
-            }
-            App.accountSeller = accounts[1];
-            App.contracts.Seller.deployed().then(async function (instance) {
-                //save save package in contract
-                //!@!@!@!@
-                await instance.setFlagSeller.sendTransaction($name, 1, { from: App.accountSeller })
-               alert($name);
-            }).then(function (result) {
-                // App.showMessage('Saved Successfully');
-                // alert("Add Item Success!")
-            }).catch(function (error) {
-                // App.showError(error);
-                // alert(error);
-            })
-        })
+        App.template("Seller", 1)
     },
     Confirm_btnSellerFailShipper: async function () {
-        $name = $('#Confirm_ShipFail').val();
-        web3.eth.getAccounts(function (error, accounts) {
-            if (error) {
-                console.log("error"+error);
-            }
-            App.accountSeller = accounts[1];
-            App.contracts.Seller.deployed().then(async function (instance) {
-                //save save package in contract
-            await instance.setFlagSeller.sendTransaction($name, 2, { from: App.accountSeller })
-               alert($name);
-            }).then(function (result) {
-                // App.showMessage('Saved Successfully');
-                // alert("Add Item Success!")
-            }).catch(function (error) {
-                // App.showError(error);
-                // alert(error);
-            })
-        })
+        App.template("Seller", 2);
     },
     Confirm_btnSellerFailBuyer: async function () {
-        $name = $('#Confirm_ShipFail').val();
-        web3.eth.getAccounts(function (error, accounts) {
-            if (error) {
-                console.log("error"+error);
-            }
-            App.accountSeller = accounts[1];
-            App.contracts.Seller.deployed().then(async function (instance) {
-                //save save package in contract
-                await instance.setFlagSeller.sendTransaction($name, 3, { from: App.accountSeller })
-               alert($name);
-            }).then(function (result) {
-                // App.showMessage('Saved Successfully');
-                // alert("Add Item Success!")
-            }).catch(function (error) {
-                // App.showError(error);
-                // alert(error);
-            })
-        })
+        App.template("Seller", 3);
     },
     Confirm_btnShipperok: async function () {
-        $name = $('#Confirm_ShipFail').val();
-        web3.eth.getAccounts(function (error, accounts) {
-            if (error) {
-                console.log("error"+error);
-            }
-            App.accountShipper = accounts[3];
-            App.contracts.Seller.deployed().then(async function (instance) {
-                //save save package in contract
-                await instance.setFlagShipper.sendTransaction($name, 1, { from: App.accountShipper })
-               alert($name);
-            }).then(function (result) {
-                // App.showMessage('Saved Successfully');
-                // alert("Add Item Success!")
-            }).catch(function (error) {
-                // App.showError(error);
-                // alert(error);
-            })
-        })
+        App.template("Shipper", 1);
     },
     Confirm_btnShipperFailBuyer: async function () {
-        $name = $('#Confirm_ShipFail').val();
-        web3.eth.getAccounts(function (error, accounts) {
-            if (error) {
-                console.log("error"+error);
-            }
-            App.accountShipper = accounts[3];
-            App.contracts.Seller.deployed().then(async function (instance) {
-                //save save package in contract
-                await instance.setFlagShipper.sendTransaction($name, 3, { from: App.accountShipper })
-               alert($name);
-            }).then(function (result) {
-                // App.showMessage('Saved Successfully');
-                // alert("Add Item Success!")
-            }).catch(function (error) {
-                // App.showError(error);
-                // alert(error);
-            })
-        })
+        App.template("Shipper", 3);
     },
-    
     Confirm_btnBuyerok: async function () {
-        $name = $('#Confirm_ShipFail').val();
-        web3.eth.getAccounts(function (error, accounts) {
-            if (error) {
-                console.log("error"+error);
-            }
-            App.accountBuyer = accounts[2];
-            App.contracts.Seller.deployed().then(async function (instance) {
-                //save save package in contract
-                await instance.setFlagBuyer.sendTransaction($name, 1, { from: App.accountBuyer })
-               alert($name);
-            }).then(function (result) {
-                // App.showMessage('Saved Successfully');
-                // alert("Add Item Success!")
-            }).catch(function (error) {
-                // App.showError(error);
-                // alert(error);
-            })
-        })
+        App.template("Buyer", 1);
     },
-    
     Confirm_btnBuyerFailShipper: async function () {
-        $name = $('#Confirm_ShipFail').val();
-        web3.eth.getAccounts(function (error, accounts) {
-            if (error) {
-                console.log("error"+error);
-            }
-            App.accountBuyer = accounts[2];
-            App.contracts.Seller.deployed().then(async function (instance) {
-                //save save package in contract
-                await instance.setFlagBuyer.sendTransaction($name, 2, { from: App.accountBuyer })
-               alert($name);
-            }).then(function (result) {
-                // App.showMessage('Saved Successfully');
-                // alert("Add Item Success!")
-            }).catch(function (error) {
-                // App.showError(error);
-                // alert(error);
-            })
-        })
+        App.template("Buyer", 2);
     },
     /*
     actor: who you are: selelr, buyer, shipper
@@ -199,25 +78,36 @@ App = {
             if (error) {
                 console.log("error"+error);
             }
+            switch(_actor){
+                case "Seller":
+                    App.accountSeller = accounts[1];
+                    break;
+                case "Buyer":
+                    App.accountBuyer = accounts[2];
+                    break;
+                case "Shipper":
+                    App.accountShipper = accounts[3];
+                    break;
+                default:
+                    break;
+            }
             App.contracts.Seller.deployed().then(async function (instance) {
                 switch(_actor){
                     case "Seller":
-                        App.accountSeller = accounts[1];
+                        await instance.setFlagSeller.sendTransaction($name, _flag, { from: App.accountSeller })
                         break;
                     case "Buyer":
-                        App.accountBuyer = accounts[2];
+                        await instance.setFlagBuyer.sendTransaction($name, _flag, { from: App.accountBuyer })
                         break;
                     case "Shipper":
-                        App.accountShipper = accounts[3];
+                        await instance.setFlagShipper.sendTransaction($name, _flag, { from: App.accountShipper })
                         break;
                     default:
                         break;
                 }
-                //save save package in contract
-                await instance.setFlagBuyer.sendTransaction($name, 2, { from: App.accountSeller })
             }).then(function (result) {
                 // App.showMessage('Saved Successfully');
-                alert(result)
+                alert("Successfully");
             }).catch(function (error) {
                 // App.showError(error);
                 alert(error);
