@@ -53,4 +53,12 @@ contract DepositShipper {
         balances[owner] -= e_to_seller;
         owner.transfer(getEther());
     }
+    
+    //shiper failse
+    function refundToShipper() payable public {
+        // require(msg.sender==owner, "wrong address");
+        //send to seller
+        owner.transfer(getEther());
+        balances[owner] -= getEther();
+    }
 }

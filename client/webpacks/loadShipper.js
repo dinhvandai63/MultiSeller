@@ -33,7 +33,7 @@ App = {
             if (error) {
                 App.showError(error);
             }
-            App.currentAccount = accounts[0];
+            App.currentAccount = accounts[3];
             try {
                 App.contracts.Seller.deployed().then(async function (instance) {
                     //content information of package
@@ -276,27 +276,9 @@ AppVerifier = {
             AppVerifier.contracts.Verifier = TruffleContract(VerifierdArtifact);
             AppVerifier.contracts.Verifier.setProvider(AppVerifier.web3Provider);
         })
-        
-        if (!AppVerifier.not_new) {
-            return await AppVerifier.initContractNewVerifier();
-        }
-       
-    },
-    initContractNewVerifier: async function () {
-        await web3.eth.getAccounts(async function (error, accounts) {
-            if (error) {
-                console.log("get account in verifier false" + error);
-            }
-            AppVerifier.currentAccount = accounts[0];
-            AppVerifier.contracts.Verifier.new({ from: AppVerifier.currentAccount }).then(instance => {
-                AppVerifier.addressVerifier = instance.address;
-            }).catch(err => {
-                console.log('error', err);
-            });
-        })
     },
     watchStatus: async function (address_verifier) {
-        await AppVerifier.init(true);
+        await AppVerifier.init();
         web3.eth.getAccounts(async function (error, accounts) {
             if (error) {
                 console.log(error);
@@ -319,8 +301,7 @@ AppVerifier = {
     },
     //if input false, will create new contract
     //true is not create
-    init: async function (_new_or_not) {
-        AppVerifier.not_new = _new_or_not;
+    init: async function () {
         return await AppVerifier.initWeb3();
     }
 }

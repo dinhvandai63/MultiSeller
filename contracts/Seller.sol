@@ -38,7 +38,7 @@ contract Seller{
     constructor() public payable{
         seller = msg.sender;    
     }  
-   function setPackage(string memory _name, uint  _price,string memory _details) onlySeller public{
+   function setPackage(string memory _name, uint  _price,string memory _details) public{
         packages[id].name = _name;
         packages[id].price = _price;
         packages[id].details = _details;
@@ -63,7 +63,7 @@ contract Seller{
         packages[_id].current_ower);
    }
     //get package selled for shipper
-    function getPackageSelledForShipper(uint _id) onlySeller public view 
+    function getPackageSelledForShipper(uint _id) public view 
     returns(uint index, string memory _name, uint  _price,string memory address_delivery){
         //require(mapping_seller_deposit[_id] != 0x0000000000000000000000000000000000000000,"Package was not bought");
         if(mapping_seller_deposit[_id] != 0x0000000000000000000000000000000000000000)
@@ -75,7 +75,7 @@ contract Seller{
             return( 0, "", 0, "");
     }
     //get package selled for seller
-    function getPackageSelled(uint _id) onlySeller public view 
+    function getPackageSelled(uint _id) public view 
     returns(uint index, string memory _name, uint  _price,string memory address_delivery, string memory details){
     //    require(mapping_buyer[_id] != 0x0000000000000000000000000000000000000000,"Package was not bought");
         if(mapping_buyer[_id] != 0x0000000000000000000000000000000000000000)
@@ -90,7 +90,7 @@ contract Seller{
             return(0, "", 0, "", "");
     }
     //get package for verify
-    function getPackageVerifier(uint _id) onlySeller public view 
+    function getPackageVerifier(uint _id) public view 
     returns(uint index, string memory _name, uint  _price,string memory _details,
             uint out0, uint out1){
         // require(mapping_buyer[_id] != 0x0000000000000000000000000000000000000000,"Package was not bought"); 
@@ -109,7 +109,7 @@ contract Seller{
     }
 
 
-    function getTotalPackage() onlySeller public view 
+    function getTotalPackage() public view 
     returns(uint total_packages){
             return(id);
     }
@@ -223,7 +223,7 @@ contract Seller{
         //refund buyer
         DepositBuyer(buyer_deposit_temp).refundToBuyerFail();
         //refund buyer and seller
-        DepositShipper(shipper_deposit_temp).refundToShipperAndSellerTrue();
+        DepositShipper(shipper_deposit_temp).refundToShipper();
     }
     
       

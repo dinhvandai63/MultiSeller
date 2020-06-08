@@ -5,6 +5,9 @@ App = {
     web3Provider: null,
     contracts: {},
     currentAccount: {},
+    accountSeller: {},
+    accountBuyer: {},
+    accountShipper: {},
     id_item: 0,
     output0_p: 0,
     output1_p: 0,
@@ -44,11 +47,11 @@ App = {
             if (error) {
                 console.log("error"+error);
             }
-            App.currentAccount = accounts[0];
+            App.accountSeller = accounts[1];
             App.contracts.Seller.deployed().then(async function (instance) {
                 //save save package in contract
                 //!@!@!@!@
-                await instance.setFlagSeller.sendTransaction($name, 1, { from: App.currentAccount })
+                await instance.setFlagSeller.sendTransaction($name, 1, { from: App.accountSeller })
                alert($name);
             }).then(function (result) {
                 // App.showMessage('Saved Successfully');
@@ -65,10 +68,10 @@ App = {
             if (error) {
                 console.log("error"+error);
             }
-            App.currentAccount = accounts[0];
+            App.accountSeller = accounts[1];
             App.contracts.Seller.deployed().then(async function (instance) {
                 //save save package in contract
-            await instance.setFlagSeller.sendTransaction($name, 2, { from: App.currentAccount })
+            await instance.setFlagSeller.sendTransaction($name, 2, { from: App.accountSeller })
                alert($name);
             }).then(function (result) {
                 // App.showMessage('Saved Successfully');
@@ -85,10 +88,10 @@ App = {
             if (error) {
                 console.log("error"+error);
             }
-            App.currentAccount = accounts[0];
+            App.accountSeller = accounts[1];
             App.contracts.Seller.deployed().then(async function (instance) {
                 //save save package in contract
-                await instance.setFlagSeller.sendTransaction($name, 3, { from: App.currentAccount })
+                await instance.setFlagSeller.sendTransaction($name, 3, { from: App.accountSeller })
                alert($name);
             }).then(function (result) {
                 // App.showMessage('Saved Successfully');
@@ -105,10 +108,10 @@ App = {
             if (error) {
                 console.log("error"+error);
             }
-            App.currentAccount = accounts[0];
+            App.accountShipper = accounts[3];
             App.contracts.Seller.deployed().then(async function (instance) {
                 //save save package in contract
-                await instance.setFlagShipper.sendTransaction($name, 1, { from: App.currentAccount })
+                await instance.setFlagShipper.sendTransaction($name, 1, { from: App.accountShipper })
                alert($name);
             }).then(function (result) {
                 // App.showMessage('Saved Successfully');
@@ -125,10 +128,10 @@ App = {
             if (error) {
                 console.log("error"+error);
             }
-            App.currentAccount = accounts[0];
+            App.accountShipper = accounts[3];
             App.contracts.Seller.deployed().then(async function (instance) {
                 //save save package in contract
-                await instance.setFlagShipper.sendTransaction($name, 3, { from: App.currentAccount })
+                await instance.setFlagShipper.sendTransaction($name, 3, { from: App.accountShipper })
                alert($name);
             }).then(function (result) {
                 // App.showMessage('Saved Successfully');
@@ -146,10 +149,10 @@ App = {
             if (error) {
                 console.log("error"+error);
             }
-            App.currentAccount = accounts[0];
+            App.accountBuyer = accounts[2];
             App.contracts.Seller.deployed().then(async function (instance) {
                 //save save package in contract
-                await instance.setFlagBuyer.sendTransaction($name, 1, { from: App.currentAccount })
+                await instance.setFlagBuyer.sendTransaction($name, 1, { from: App.accountBuyer })
                alert($name);
             }).then(function (result) {
                 // App.showMessage('Saved Successfully');
@@ -167,10 +170,10 @@ App = {
             if (error) {
                 console.log("error"+error);
             }
-            App.currentAccount = accounts[0];
+            App.accountBuyer = accounts[2];
             App.contracts.Seller.deployed().then(async function (instance) {
                 //save save package in contract
-                await instance.setFlagBuyer.sendTransaction($name, 2, { from: App.currentAccount })
+                await instance.setFlagBuyer.sendTransaction($name, 2, { from: App.accountBuyer })
                alert($name);
             }).then(function (result) {
                 // App.showMessage('Saved Successfully');
@@ -181,7 +184,46 @@ App = {
             })
         })
     },
-    
+    /*
+    actor: who you are: selelr, buyer, shipper
+    your flag: 
+        1,2,3
+        1 ok
+        2 shipperF
+        3 buyerF
+    index package
+    */
+    template: async function (_actor, _flag) {
+        $name = $('#Confirm_ShipFail').val();
+        web3.eth.getAccounts(function (error, accounts) {
+            if (error) {
+                console.log("error"+error);
+            }
+            App.contracts.Seller.deployed().then(async function (instance) {
+                switch(_actor){
+                    case "Seller":
+                        App.accountSeller = accounts[1];
+                        break;
+                    case "Buyer":
+                        App.accountBuyer = accounts[2];
+                        break;
+                    case "Shipper":
+                        App.accountShipper = accounts[3];
+                        break;
+                    default:
+                        break;
+                }
+                //save save package in contract
+                await instance.setFlagBuyer.sendTransaction($name, 2, { from: App.accountSeller })
+            }).then(function (result) {
+                // App.showMessage('Saved Successfully');
+                alert(result)
+            }).catch(function (error) {
+                // App.showError(error);
+                alert(error);
+            })
+        })
+    },
     init: async function () {
         return await App.initWeb3();
     },
