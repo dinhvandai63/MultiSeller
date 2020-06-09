@@ -72,7 +72,6 @@ App = {
     bindEvents: function (total_packages) {
         for(i=0;i<total_packages;i++){
             $('#btnBuy'+i).click(App.buyItem);
-
         }
     },
     buyItem: async function () {
@@ -81,13 +80,13 @@ App = {
         //last character in id is index package
         let id_element = this.id;
         let index_package = id_element[id_element.length-1];
-        $name = $('#buyer_Name'+index_package).text();
-        $price = $('#buyer_Price'+index_package).text();
-        $details = $('#buyer_Details'+index_package).text();
+        $name = $('#buyer_Name'+index_package).text().slice("Name: ".length);
+        $price = $('#buyer_Price'+index_package).text().slice("Price: ".length);
+        $details = $('#buyer_Details'+index_package).text().slice("Details: ".length);
         var $name_temp = confirm("you buyer Item: " + $name);
         //repair for request
         if ($name_temp) {
-            var add_delivery = prompt("Vui long nhap dia chi giao hang!");
+            var add_delivery = prompt("Address");
             //make sure address delivy available
             if (add_delivery.length != 0) {
                 try {
@@ -146,6 +145,8 @@ App = {
                 } catch (error) {
                     console.log("error buyer Item: " + error);
                 }
+            }else{
+                alert("Address not null")
             }
         }
     },
