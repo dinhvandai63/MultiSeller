@@ -68,12 +68,11 @@
     margin-top:10px;
   }
 
-  .card {
+  .mycard {
   background-color: #a3d5d3;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 300px;
   margin: auto;
-  text-align: center;
   font-family: arial;
 }
 
@@ -82,7 +81,7 @@
   font-size: 22px;
 }
 
-.card > p > button {
+.mycard > p > button {
   border: none;
   outline: 0;
   padding: 12px;
@@ -94,6 +93,6 @@
   font-size: 18px;
 }
 
-.card > p > button:hover {
+.mycard > p > button:hover {
   opacity: 0.7;
 }

@@ -59,13 +59,14 @@ App = {
             } catch (error) {
                 console.log("error getPackage: " + error);
             }
-        })
+        }) 
     },  
     showPackage: function (packages) {
         for(i=0;i<packages.length;i++){
-            $('#buyer_Name'+i).text(packages[i][1]);
-            $('#buyer_Price'+i).text(packages[i][2]);
-            $('#buyer_Details'+i).text(packages[i][3]);
+            $('#buyer_Name'+i).text("Name: "+packages[i][1]);
+            $('#buyer_Price'+i).text("Price: " + packages[i][2]);
+            $('#buyer_Details'+i).text("Details: " + packages[i][3]);
+            $('#buyer_Status'+i).text("Status: " + packages[i][4]);
         }  
     },
     bindEvents: function (total_packages) {
@@ -154,37 +155,49 @@ App = {
     crateFormShowItem: function (total_item) {
         var i = 0;
         for(j=0; j< total_item;j++){
+
+
 			//add div
 		  	var div_seller = document.createElement("div"); 
-		  	div_seller.className = "card"
+		  	div_seller.className = "mycard col-4 px-0 mt-0 mx-3"
 			div_seller.id = "seller"+i;
 			document.body.appendChild(div_seller); 
 
 			//add name, price, detail, btnBuy
 			var h1_name = document.createElement("h1");
 			h1_name.id = "buyer_Name"+i;
+            h1_name.className = "text-center";
 			h1_name.innerHTML = "Tailored Jeans";
 
 			var p_price = document.createElement("p"); 
 			p_price.id = "buyer_Price"+i;
-			p_price.className = "price";
+			p_price.className = "price pl-3";
 			p_price.innerHTML = "10";
 
 			var p_details = document.createElement("p"); 
 			p_details.id = "buyer_Details"+i;
-			p_details.innerHTML = "Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.";
+            p_details.className = "pl-3";
+			p_details.innerHTML = "Some text about the jeans.";
+
+            var p_status = document.createElement("p"); 
+            p_status.id = "buyer_Status"+i;
+            p_status.className = "pl-3";
+            p_status.innerHTML = "Some text about the jeans.";
 
 			var p_ = document.createElement("p"); 
 			p_.id = "pContentButton"+i;
+            p_.className = "mb-0";
 
 			var button_buy = document.createElement("button"); 
 			button_buy.type = "button";
 			button_buy.id = "btnBuy"+i;	
 			button_buy.innerHTML = "Buy";
-			
+
+			document.getElementById("seller").appendChild(div_seller)
 			document.getElementById(div_seller.id).appendChild(h1_name);
 			document.getElementById(div_seller.id).appendChild(p_price);
 			document.getElementById(div_seller.id).appendChild(p_details);
+            document.getElementById(div_seller.id).appendChild(p_status);
 			document.getElementById(div_seller.id).appendChild(p_);
 			document.getElementById(p_.id).appendChild(button_buy);
  			i++;
