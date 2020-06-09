@@ -71,9 +71,9 @@ App = {
     },  
     showPackage: function (packages) {
         for(i=0;i<packages.length;i++){
-            $('#shipper_Name'+i).text(packages[i][1]);
-            $('#shipper_Price'+i).text(packages[i][2]);
-            $('#shipper_Address'+i).text(packages[i][3]);
+            $('#shipper_Name'+i).text("Name: "+packages[i][1]);
+            $('#shipper_Price'+i).text("Price: "+packages[i][2]);
+            $('#shipper_Address'+i).text("Address: "+packages[i][3]);
         }  
     },
     bindEvents: function (total_packages) {
@@ -88,7 +88,7 @@ App = {
         //last character in id is index package
         let id_element = this.id;
         let index_package = id_element[id_element.length-1];
-        $name = $('#shipper_Name'+index_package).text();
+        $name = $('#shipper_Name'+index_package).text().slice("Name: ".length);
 
         var $name_temp = confirm("you buyer ship item: " + $name);
         
@@ -123,7 +123,7 @@ App = {
         //last character in id is index package
         let id_element = this.id;
         let index_package = id_element[id_element.length-1];
-        $name = $('#shipper_Name'+index_package).text();
+        $name = $('#shipper_Name'+index_package).text().slice("Name: ".length);
         
         await App.contracts.Seller.deployed().then(async function (instance) {
             if (App.currentAccount.length) {
@@ -145,26 +145,29 @@ App = {
             }
 			//add div
 		  	var div_seller = document.createElement("div"); 
-		  	div_seller.className = "card"
 			div_seller.id = "seller"+i;
+            div_seller.className = "mycard col-4 px-0 mt-0 mx-3";            
 			document.body.appendChild(div_seller); 
 
 			//add name, price, detail, btnBuy
 			var h1_name = document.createElement("h1");
 			h1_name.id = "shipper_Name"+i;
+            h1_name.className = "text-center";
 			h1_name.innerHTML = "Tailored Jeans";
 
 			var p_price = document.createElement("p"); 
 			p_price.id = "shipper_Price"+i;
-			p_price.className = "price";
+			p_price.className = "price pl-3";
 			p_price.innerHTML = "10";
 
 			var p_shipper_address = document.createElement("p"); 
 			p_shipper_address.id = "shipper_Address"+i;
+            p_shipper_address.className = "pl-3";
 			p_shipper_address.innerHTML = "Lorem jeamsun denim lorem jeansum.";
 
 			var p_ = document.createElement("p"); 
 			p_.id = "pContentButton"+i;
+            p_.className = "mb-0";
 
 			var button_ship = document.createElement("button"); 
 			button_ship.type = "button";
@@ -175,7 +178,9 @@ App = {
 			button_check_status.type = "button";
 			button_check_status.id = "btnShipCheckStatus"+i;	
 			button_check_status.innerHTML = "Check Status";
-			
+            
+
+            document.getElementById("seller").appendChild(div_seller)			
 			document.getElementById(div_seller.id).appendChild(h1_name);
 			document.getElementById(div_seller.id).appendChild(p_price);
 			document.getElementById(div_seller.id).appendChild(p_shipper_address);

@@ -291,10 +291,10 @@ App = {
         let id_element = this.id;
         let index_package = id_element[id_element.length-1];
         //get infor form UI
-        let name = $('#SellerConfirm_Name'+index_package).text();
+        let name = $('#SellerConfirm_Name'+index_package).text().slice("Name: ".length);
         
-        let price = $('#SellerConfirm_Price'+index_package).text();
-        let address_delivery = $('#SellerConfirm_Delivery'+index_package).text();
+        let price = $('#SellerConfirm_Price'+index_package).text().slice("Price: ".length);
+        let address_delivery = $('#SellerConfirm_Delivery'+index_package).text().slice("Address: ".length);
         let address_contract_verifyTx = 0;
 
         //get address_verifyTx
