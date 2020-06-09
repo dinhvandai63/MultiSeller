@@ -16,7 +16,7 @@ contract Seller{
         uint price;
         string details;
         string address_delivery;
-        string current_ower;
+        string status;
     }
     //use when seller verifyTx;
     mapping(uint => output_zksnark) output_zksnarks;
@@ -42,7 +42,7 @@ contract Seller{
         packages[id].name = _name;
         packages[id].price = _price;
         packages[id].details = _details;
-        packages[id].current_ower = "seller";
+        packages[id].status = "Sell";
         if(id == 1000000000000000000){
             id=0;
         }
@@ -50,33 +50,35 @@ contract Seller{
    }
 
    function getPackage(uint _id) public view 
-   returns(uint index, string memory _name, uint  _price,string memory _details){
+   returns(uint index, string memory name, uint  price,string memory details, string memory status){
         return(
         _id,
         packages[_id].name,
         packages[_id].price,
-        packages[_id].details);
+        packages[_id].details,
+        packages[_id].status);
    }
    function getCurrentOwer(uint _id) public view 
    returns(string memory _details){
         return(
-        packages[_id].current_ower);
+        packages[_id].status);
    }
     //get package selled for shipper
     function getPackageSelledForShipper(uint _id) public view 
-    returns(uint index, string memory _name, uint  _price,string memory address_delivery){
+    returns(uint index, string memory _name, uint  _price,string memory address_delivery, string memory status){
         //require(mapping_seller_deposit[_id] != 0x0000000000000000000000000000000000000000,"Package was not bought");
         if(mapping_seller_deposit[_id] != 0x0000000000000000000000000000000000000000)
             return( _id,
                 packages[_id].name,
                 packages[_id].price,
-                packages[_id].address_delivery);
+                packages[_id].address_delivery,
+                packages[_id].status);
         else
-            return( 0, "", 0, "");
+            return( 0, "", 0, "", "");
     }
     //get package selled for seller
     function getPackageSelled(uint _id) public view 
-    returns(uint index, string memory _name, uint  _price,string memory address_delivery, string memory details){
+    returns(uint index, string memory _name, uint  _price,string memory address_delivery, string memory details, string memory status){
     //    require(mapping_buyer[_id] != 0x0000000000000000000000000000000000000000,"Package was not bought");
         if(mapping_buyer[_id] != 0x0000000000000000000000000000000000000000)
             return(
@@ -84,10 +86,11 @@ contract Seller{
             packages[_id].name,
             packages[_id].price,
             packages[_id].address_delivery,
-            packages[_id].details
+            packages[_id].details,
+            packages[_id].status
             );
         else
-            return(0, "", 0, "", "");
+            return(0, "", 0, "", "", "");
     }
     //get package for verify
     function getPackageVerifier(uint _id) public view 
@@ -128,7 +131,7 @@ contract Seller{
     //get address seller_deposit_to
     function setSellerDepositAddress(uint _id, address payable _address) public{
         mapping_seller_deposit[_id] = _address;
-        packages[_id].current_ower = "selled";
+        packages[_id].status = "selled";
     }
     
     //get address seller_deposit_to
@@ -176,7 +179,7 @@ contract Seller{
         output_zksnarks[_id].output_0 = _out0;
         output_zksnarks[_id].output_1 = _out1;
 
-        packages[_id].current_ower = "buyer";
+        packages[_id].status = "buyer";
         return(
             packages[_id].name,
             packages[_id].price,
@@ -285,11 +288,11 @@ contract Seller{
     }
 
     function setShipperOwner(uint _id) public{
-        packages[_id].current_ower = "shipper";
+        packages[_id].status = "shipper";
     }
 
     function setDone(uint _id) public{
-        packages[_id].current_ower = "Done";
+        packages[_id].status = "Done";
     }
     function resetPakcageData(uint _id) public{
         packages[_id].name = "";
