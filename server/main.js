@@ -20,25 +20,25 @@ app.get('/', (req, res) => {
 
 app.use(express.json());
 app.get('/buyitem/:id/:name/:price/:details', async (req, res) => {
-  // const id = parseInt(req.params.id);
-  // const name = req.params.name;
-  // const price = req.params.price;
-  // const details = req.params.details;
+  const id = parseInt(req.params.id);
+  const name = req.params.name;
+  const price = req.params.price;
+  const details = req.params.details;
 
-  // console.log(id + " " + name + " " + price + " " + details);
-  // // create contract verifyTx
-  // try {
-  //   var temp = await main(id + name + price + details);
-  //   // temp.then(x => console.log("this is temp "+x[2]));
-  // } catch (err) {
-  //   console.log("this error in get /buyItem/.. " + err);
-  //   res.send({ erro: err });
-  // }
-  // console.log("below is temp 3: ");
-  // console.log(temp);
-  var temp =  [];
-  temp[0] = 0;
-  temp[1] = 0;
+  console.log(id + " " + name + " " + price + " " + details);
+  // create contract verifyTx
+  try {
+    var temp = await main(id + name + price + details);
+    // temp.then(x => console.log("this is temp "+x[2]));
+  } catch (err) {
+    console.log("this error in get /buyItem/.. " + err);
+    res.send({ erro: err });
+  }
+  console.log("below is temp 3: ");
+  console.log(temp);
+  // var temp =  [];
+  // temp[0] = 0;
+  // temp[1] = 0;
   res.send({ output0: temp[0], output1: temp[1] });
 });
 

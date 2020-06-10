@@ -74,6 +74,7 @@ App = {
             $('#shipper_Name'+i).text("Name: "+packages[i][1]);
             $('#shipper_Price'+i).text("Price: "+packages[i][2]);
             $('#shipper_Address'+i).text("Address: "+packages[i][3]);
+            $('#shipper_status'+i).text("Status: "+packages[i][4]);
         }  
     },
     bindEvents: function (total_packages) {
@@ -165,6 +166,11 @@ App = {
             p_shipper_address.className = "pl-3";
 			p_shipper_address.innerHTML = "Lorem jeamsun denim lorem jeansum.";
 
+            var p_status = document.createElement("p"); 
+            p_status.id = "shipper_status"+i;
+            p_status.className = "pl-3";
+            p_status.innerHTML = "Lorem jeamsun denim lorem jeansum.";
+
 			var p_ = document.createElement("p"); 
 			p_.id = "pContentButton"+i;
             p_.className = "mb-0";
@@ -184,6 +190,7 @@ App = {
 			document.getElementById(div_seller.id).appendChild(h1_name);
 			document.getElementById(div_seller.id).appendChild(p_price);
 			document.getElementById(div_seller.id).appendChild(p_shipper_address);
+            document.getElementById(div_seller.id).appendChild(p_status);
 			document.getElementById(div_seller.id).appendChild(p_);
             document.getElementById(p_.id).appendChild(button_ship);
             document.getElementById(p_.id).appendChild(button_check_status);
