@@ -171,7 +171,7 @@ App = {
                      ///send request to server run zokrates to create proof
                      //get index package
                     total_package = await instance.getTotalPackage.call({ from: App.currentAccount });
-
+                    
                     console.log("this index: "+total_package);
                     console.log(total_package);
                     let id = total_package - 1;
@@ -329,7 +329,6 @@ App = {
         try { 
             let id_element = this.id;
             let index_package = id_element[id_element.length-1];
-            console.log("that index: 1"+index_package)
             ///read data package and out0, out1         
             await App.getPackageVerifier(index_package);    
             await App.setOwerPackage(index_package);    
@@ -339,14 +338,8 @@ App = {
             req.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
             req.send();
             //receive response from server local, output0, output1
-            console.log(req.status);
             var obj = JSON.parse(req.responseText);
-            console.log("this response: ");
-            console.log(obj.package.name);
-            //end read data
-            console.log("this package verifier 3: id~name~price~details~out0~out1");
-            console.log(App.package_verifier_p[0] + " ~ " + App.package_verifier_p[1] + " ~ "
-                + App.package_verifier_p[2]);
+
             console.log("step 4"+index_package)
             let id = App.package_verifier_p[0];
             let name = App.package_verifier_p[1];
@@ -362,21 +355,12 @@ App = {
             req.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
             req.send();
             //receive response from server local, output0, output1
-            console.log(req.status);
             obj = JSON.parse(req.responseText);
-            console.log("step 5: proof a");
-            console.log(obj.proof_data.proof.a);
-            console.log("proof_data");
-            console.log(obj.proof_data);
             ///read proof
             let obj_proof = obj.proof_data.proof;
             let obj_input = obj.proof_data.inputs;
-            console.log("obj_proof a");
-            console.log(obj_proof.a);
             ///get ID contract verifier
             let address_verifier = App.address_verifier_p;
-            console.log("step 6: address_verifier");
-            console.log(address_verifier);
             ///run function verifyTx
             AppVerifier.runVerifyTx(address_verifier, obj_proof.a, obj_proof.b, obj_proof.c, obj_input)
             ///read status
@@ -554,6 +538,8 @@ AppVerifier = {
             }
             AppVerifier.currentAccount = accounts[1];
             AppVerifier.contracts.Verifier.at(address_verifier).then(async function (instance) {
+                console.log("this instance::");
+                console.log(instance)
                 if (AppVerifier.currentAccount.length) {
                     let status = instance.verifyTx.call(a, b, c, input, { from: AppVerifier.currentAccount })
                     status.then(
@@ -565,7 +551,6 @@ AppVerifier = {
                         // Log the rejection reason
                         function(reason) {
                             console.log('Handle rejected promise ('+reason+') here.');
-                            
                     });
                 }
             }).catch(err => {

@@ -128,9 +128,9 @@ App = {
         
         await App.contracts.Seller.deployed().then(async function (instance) {
             if (App.currentAccount.length) {
-                await instance.getAddressVerifier.call(index_package, { from: App.currentAccount }).then(async function (instance) {
-                    App.address_verifier_p = instance; 
-                    await AppVerifier.watchStatus(instance);                
+                await instance.getAddressVerifier.call(index_package, { from: App.currentAccount }).then(async function (address_verifier) {
+                    App.address_verifier_p = address_verifier; 
+                    await AppVerifier.watchStatus(address_verifier);                
                 })
             }
         })
@@ -297,16 +297,18 @@ AppVerifier = {
             }
             AppVerifier.currentAccount = accounts[3];
             AppVerifier.contracts.Verifier.at(address_verifier).then(async function (instance) {
-                if (AppVerifier.currentAccount.length) {
-                    await $.getJSON('Verifier.json', function (data) {
-                        web3socket = new Web3(new Web3.providers.WebsocketProvider("ws://127.0.0.1:7545"));
-                        contract =new web3socket.eth.Contract(data["abi"],instance.address);
-                        var track = contract.events.Verified((err, result)=>{
-                            console.log(result)
-                        })
-                    })
+                if (AppVerifier.currentAccount.length) {                    // get status
+                    await instance.getPastEvents( 'Verified', { fromBlock: 0, toBlock: 'latest' }, 
+                    function(error, events){ console.log(events); }).then(function(events){
+                        console.log(events[0].returnValues.s);
+                        alert(events[0].returnValues.s)
+                    }).catch(err => {
+                        alert("Waiting for the seller to verify");
+                        console.log('error', err);
+                    });
                 }
             }).catch(err => {
+                alert("error2" + err);
                 console.log('error', err);
             });
         })
