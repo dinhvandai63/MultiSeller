@@ -395,7 +395,7 @@ AppSellerDeposit = {
     address_dilivery: "",
     address_verifyTx: 0,
     app_not_deposit: false,
-    address_contract_seller: 0,
+    addressMainContract: 0,
     initWeb3: async function () {
         if (process.env.MODE == 'development' || typeof window.web3 === 'undefined') {
             AppSellerDeposit.web3Provider = new Web3.providers.HttpProvider(process.env.LOCAL_NODE);
@@ -431,12 +431,12 @@ AppSellerDeposit = {
         }).then(async function(){
             let price_value = AppSellerDeposit.price;
 
-            await AppSellerDeposit.contracts.DepositSeller.new(AppSellerDeposit.address_contract_seller,{
+            await AppSellerDeposit.contracts.DepositSeller.new(AppSellerDeposit.addressMainContract,{
                 value: price_value, from: AppSellerDeposit.currentAccount
             }).then(instance => {
                 //instance.address is address contract created
                 AppSellerDeposit.addressSellerDeposit = instance.address;
-                console.log("seller deposit: ", AppSellerDeposit.address_contract_seller, AppSellerDeposit.currentAccount)
+                console.log("seller deposit: ", AppSellerDeposit.addressMainContract, AppSellerDeposit.currentAccount)
                 //set value for contract seller deposit  
                 // instance.setValueFirst.sendTransaction(
                 //     AppSellerDeposit.name_item,
@@ -471,10 +471,10 @@ AppSellerDeposit = {
     //string memory _name, string memory _name_item,
     // uint _price, string memory _address,address _address_verifyTx
     //_address is address will dilivery in the real world
-    init: async function (_price, _address_contract_seller) {
+    init: async function (_price, _address_main_contract) {
         AppSellerDeposit.price = _price;
         AppSellerDeposit.app_not_deposit = false;
-        AppSellerDeposit.address_contract_seller = _address_contract_seller;
+        AppSellerDeposit.addressMainContract = _address_main_contract;
 
         return await AppSellerDeposit.initWeb3();
 

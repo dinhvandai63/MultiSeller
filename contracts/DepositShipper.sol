@@ -3,12 +3,18 @@ contract DepositShipper {
     address payable public owner;
     address payable public seller;    
     address payable public buyer;  
+    address public contract_seller;  
     mapping (address => uint) public balances;
     
-    constructor(address payable _seller, address payable _buyer) payable public {
+    modifier onlySellerContract{
+        require(msg.sender == contract_seller);
+        _;
+    }
+    constructor(address payable _seller, address payable _buyer,  address _contract_seller) payable public {
         owner = msg.sender;
         seller = _seller;
         buyer = _buyer;
+        contract_seller = _contract_seller;
         balances[msg.sender] = msg.value;
     }
     
@@ -21,7 +27,7 @@ contract DepositShipper {
     }
     
     //refund full money to owner, and seller if sesssion successs
-    function refundToShipperAndSellerTrue() payable public {
+    function refundToShipperAndSellerTrue() onlySellerContract payable public {
         // require(msg.sender==owner, "wrong address");
         uint balance_to_shipper;
         uint shipper_balance = getEther();
@@ -35,7 +41,7 @@ contract DepositShipper {
     }
     
     //shiper failse
-    function refundToSellerAndBuyerSHF() payable public {
+    function refundToSellerAndBuyerSHF() onlySellerContract payable public {
         // require(msg.sender==owner, "wrong address");
         //send to seller
         uint e_to_seller;
@@ -55,7 +61,7 @@ contract DepositShipper {
     }
     
     //shiper failse
-    function refundToShipper() payable public {
+    function refundToShipper() onlySellerContract payable public {
         // require(msg.sender==owner, "wrong address");
         //send to seller
         owner.transfer(getEther());

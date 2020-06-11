@@ -88,7 +88,7 @@ App = {
         if ($name_temp) {
             var add_delivery = prompt("Address");
             //make sure address delivy available
-            if (add_delivery.length != 0) {
+            if (add_delivery != null) {
                 try {
                     let req = new XMLHttpRequest();
                     //change, request create output0, output1, pk, vk
@@ -297,7 +297,8 @@ AppBuyerDeposit = {
             //deposit
             let price_value = (AppBuyerDeposit.price * 5) / 10;
             console.log("deposti buyer: ", App.currentAccount, AppBuyerDeposit.accountShipper, AppBuyerDeposit.currentAccount)
-            await AppBuyerDeposit.contracts.DepositBuyer.new(AppBuyerDeposit.accountSeller, AppBuyerDeposit.accountShipper,{ value: price_value, from: AppBuyerDeposit.currentAccount }).then(instance => {
+            await AppBuyerDeposit.contracts.DepositBuyer.new(AppBuyerDeposit.accountSeller, AppBuyerDeposit.accountShipper, 
+                AppBuyerDeposit.addressMainContract, { value: price_value, from: AppBuyerDeposit.currentAccount }).then(instance => {
                 AppBuyerDeposit.addressBuyerDeposit = instance.address;
             }).catch(err => {
                 console.log('error', err);

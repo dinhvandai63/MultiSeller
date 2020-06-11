@@ -99,7 +99,7 @@ App = {
                 let package = [];
                 package = await instance.getPackageSelledForShipper.call(index_package, { from: App.currentAccount });
                 let price = package[2];
-                await AppShipperDeposit.init(price, index_package)
+                await AppShipperDeposit.init(price, index_package, instance.address)
                 alert("deposit: "+$name+" success!")
             } catch (err) {
                 console.log("errror when update conract: " + err);
@@ -212,6 +212,7 @@ AppShipperDeposit = {
     address_dilivery: "",
     address_verifyTx: 0,
     app_deposit: true,
+    addressMainContract: 0,
     initWeb3: async function () {
         if (process.env.MODE == 'development' || typeof window.web3 === 'undefined') {
             AppShipperDeposit.web3Provider = new Web3.providers.HttpProvider(process.env.LOCAL_NODE);
@@ -240,7 +241,7 @@ AppShipperDeposit = {
             AppShipperDeposit.currentAccount = accounts[3];
             let price_value = (AppShipperDeposit.price * 13)/10;
 
-            AppShipperDeposit.contracts.DepositShipper.new( accounts[1],  accounts[2],{
+            AppShipperDeposit.contracts.DepositShipper.new( accounts[1],  accounts[2], AppShipperDeposit.addressMainContract, {
                 value: price_value, from: AppShipperDeposit.currentAccount
             }).then(instance => {
                 console.log("shipper depost: ",  accounts[1],  accounts[2], AppShipperDeposit.currentAccount);
@@ -254,10 +255,11 @@ AppShipperDeposit = {
         })
     },
 
-    init: async function (_price, _id) {
+    init: async function (_price, _id, _address_main_contract) {
         AppShipperDeposit.price = _price;
         AppShipperDeposit.app_deposit = true;
         AppShipperDeposit.id = _id;
+        AppShipperDeposit.addressMainContract = _address_main_contract;
         return await AppShipperDeposit.initWeb3();
     }
 }

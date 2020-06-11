@@ -7,6 +7,11 @@ contract DepositSeller {
     address public contract_seller;    
     mapping (address => uint) public balances;
     //_address is address real in the world, ship will tranfer packeage to
+    modifier onlySellerContract{
+        require(msg.sender == contract_seller);
+        _;
+    }
+    
     constructor(address _contract_seller) payable public {
         owner = msg.sender;    
         contract_seller = _contract_seller;
@@ -22,12 +27,12 @@ contract DepositSeller {
     }
 
     //refund full money to owner
-    function refundToSellerTrue() payable public {
+    function refundToSellerTrue() onlySellerContract payable public {
         owner.transfer(getEther());
         balances[owner] -= getEther();
     }
     //refund full money to owner Fail
-    function refundToSellerFail() payable public {
+    function refundToSellerFail() onlySellerContract payable public {
         owner.transfer(getEther());
         balances[owner] -= getEther();
     }
