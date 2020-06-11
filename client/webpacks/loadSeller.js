@@ -541,7 +541,7 @@ AppVerifier = {
                 console.log("this instance::");
                 console.log(instance)
                 if (AppVerifier.currentAccount.length) {
-                    let status = instance.verifyTx.call(a, b, c, input, { from: AppVerifier.currentAccount })
+                    let status = instance.verifyTx.sendTransaction(a, b, c, input, { from: AppVerifier.currentAccount })
                     status.then(
                         // Log the fulfillment value
                         function(val) {    

@@ -130,6 +130,7 @@ App = {
             if (App.currentAccount.length) {
                 await instance.getAddressVerifier.call(index_package, { from: App.currentAccount }).then(async function (address_verifier) {
                     App.address_verifier_p = address_verifier; 
+                    console.log("id package: " + index_package + " !!~~!! " + address_verifier);
                     await AppVerifier.watchStatus(address_verifier);                
                 })
             }
@@ -300,6 +301,7 @@ AppVerifier = {
                 if (AppVerifier.currentAccount.length) {                    // get status
                     await instance.getPastEvents( 'Verified', { fromBlock: 0, toBlock: 'latest' }, 
                     function(error, events){ console.log(events); }).then(function(events){
+                        console.log(events[0]);
                         console.log(events[0].returnValues.s);
                         alert(events[0].returnValues.s)
                     }).catch(err => {

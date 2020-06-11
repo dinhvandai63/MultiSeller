@@ -131,7 +131,7 @@ contract Seller{
     //get address seller_deposit_to
     function setSellerDepositAddress(uint _id, address payable _address) public{
         mapping_seller_deposit[_id] = _address;
-        packages[_id].status = "selled";
+        packages[_id].status = "Selled";
     }
     
     //get address seller_deposit_to
@@ -141,6 +141,7 @@ contract Seller{
     //get address seller_deposit_to
     function setShipperDepositAddress(uint _id, address payable _address) public{
         mapping_shipper_deposit[_id] = _address;
+        packages[_id].status = "Ship";
     } 
     //get id buyerItem, return address in Ethereum
     function getBuyerAddress(uint _id) public view returns(address){
@@ -179,7 +180,7 @@ contract Seller{
         output_zksnarks[_id].output_0 = _out0;
         output_zksnarks[_id].output_1 = _out1;
 
-        packages[_id].status = "buyer";
+        packages[_id].status = "Bought";
         return(
             packages[_id].name,
             packages[_id].price,
@@ -288,7 +289,7 @@ contract Seller{
     }
 
     function setShipperOwner(uint _id) public{
-        packages[_id].status = "shipper";
+        packages[_id].status = "Shipper";
     }
 
     function setDone(uint _id) public{
