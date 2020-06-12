@@ -23,9 +23,8 @@ contract DepositShipper {
     }
     //return address owner
     function getOwer() external view returns(address payable) {
-       return owner;    
+        return owner ;  
     }
-    
     //refund full money to owner, and seller if sesssion successs
     function refundToShipperAndSellerTrue() onlySellerContract payable external {
         // require(msg.sender==owner, "wrong address");
@@ -35,36 +34,35 @@ contract DepositShipper {
         // 30% = (value / 130) * 30
         // 30% = value * (30/130)
         balance_to_shipper = (shipper_balance*30)/130;
-        balances[owner] -= balance_to_shipper;
+        uint e_seller = shipper_balance - balance_to_shipper;
+        balances[owner] = 0;
         owner.transfer(balance_to_shipper);
-        seller.transfer(getEther());
+        seller.transfer(e_seller);
     }
-    
     //shiper failse
     function refundToSellerAndBuyerSHF() onlySellerContract payable external {
         // require(msg.sender==owner, "wrong address");
         //send to seller
         uint e_to_seller;
+        uint e_ower;
         uint shipper_balance = getEther();
 
         //caculate 30% deposit send to Shipper from 130% value package,
         // 30% = (value / 130) * 30
         // 30% = value * (30/130)
         e_to_seller = (shipper_balance*15)/130;
-        
-        
+        e_ower = shipper_balance - 2*e_to_seller;
+        balances[owner] = 0;
         seller.transfer(e_to_seller);
-        balances[owner] -= e_to_seller;
         buyer.transfer(e_to_seller);
-        balances[owner] -= e_to_seller;
-        owner.transfer(getEther());
+        owner.transfer(e_ower);
     }
-    
     //shiper failse
     function refundToShipper() onlySellerContract payable external {
         // require(msg.sender==owner, "wrong address");
         //send to seller
-        owner.transfer(getEther());
-        balances[owner] -= getEther();
+        uint e_ower = getEther();
+        balances[owner] = 0;
+        owner.transfer(e_ower);
     }
 }

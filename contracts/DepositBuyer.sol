@@ -30,18 +30,19 @@ contract DepositBuyer {
     }
     //refund full money to owner
     function refundToBuyerTrue() onlySellerContract payable external {
-        owner.transfer(getEther());
-        balances[owner] -= getEther();
+        uint etherI = getEther();
+        balances[owner] = 0;
+        owner.transfer(etherI);
     }
     
     //refund full money to owner
     function refundToBuyerFail() onlySellerContract payable external {
         // require(msg.sender==owner, "wrong address");
         //send buyer 50%
-        seller.transfer(getEther()/2);
-        balances[owner] -= getEther()/2;
-
+        uint eOwner = getEther()/2;
+        seller.transfer(eOwner/2);
+        balances[owner] = 0;
         //send shipper 50%
-        shipper.transfer(getEther());
+        shipper.transfer(eOwner/2);
     }
 }

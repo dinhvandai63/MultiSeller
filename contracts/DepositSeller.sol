@@ -29,12 +29,14 @@ contract DepositSeller {
 
     //refund full money to owner
     function refundToSellerTrue() onlySellerContract payable external {
-        owner.transfer(getEther());
-        balances[owner] -= getEther();
+        uint eOwner = getEther();
+        balances[owner] = 0;
+        owner.transfer(eOwner);
     }
     //refund full money to owner Fail
     function refundToSellerFail() onlySellerContract payable external {
-        owner.transfer(getEther());
-        balances[owner] -= getEther();
+        uint e_ower = getEther();
+        balances[owner] = 0;
+        owner.transfer(e_ower);
     }
 }
