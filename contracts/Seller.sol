@@ -44,7 +44,7 @@ contract Seller{
         packages[id].price = _price;
         packages[id].details = _details;
         packages[id].status = "Sell";
-        if(id == 1000000000000000000){
+        if(id == 1e18){
             id=0;
         }
         id++;
@@ -68,7 +68,7 @@ contract Seller{
     function getPackageSelledForShipper(uint _id) external view 
     returns(uint index, string memory _name, uint  _price,string memory address_delivery, string memory status){
         //require(mapping_seller_deposit[_id] != 0x0000000000000000000000000000000000000000,"Package was not bought");
-        if(mapping_seller_deposit[_id] != 0x0000000000000000000000000000000000000000)
+        if(mapping_seller_deposit[_id] != address(0x0))
             return( _id,
                 packages[_id].name,
                 packages[_id].price,
@@ -81,7 +81,7 @@ contract Seller{
     function getPackageSelled(uint _id) external view 
     returns(uint index, string memory _name, uint  _price,string memory address_delivery, string memory details, string memory status){
     //    require(mapping_buyer[_id] != 0x0000000000000000000000000000000000000000,"Package was not bought");
-        if(mapping_buyer[_id] != 0x0000000000000000000000000000000000000000)
+        if(mapping_buyer[_id] != address(0x0))
             return(
             _id,
             packages[_id].name,
@@ -98,7 +98,7 @@ contract Seller{
     returns(uint index, string memory _name, uint  _price,string memory _details,
             uint out0, uint out1){
         // require(mapping_buyer[_id] != 0x0000000000000000000000000000000000000000,"Package was not bought"); 
-        if(_id<1000000000000000000){
+        if(_id<1e18){
             return(
             _id,
             packages[_id].name,
@@ -172,7 +172,7 @@ contract Seller{
         //require Package available
         require(packages[_id].price > 0,"Package unavailable");
         //make sure no one buy it before
-        require(mapping_buyer[_id] == 0x0000000000000000000000000000000000000000,"Package bought");
+        require(mapping_buyer[_id] == address(0x0),"Package bought");
        
         mapping_buyer[_id] = msg.sender;
         packages[_id].address_delivery = _address;
