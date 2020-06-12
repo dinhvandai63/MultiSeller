@@ -39,7 +39,7 @@ contract Seller{
     constructor() public payable{
         seller = msg.sender;    
     }  
-   function setPackage(string memory _name, uint  _price,string memory _details) public{
+   function setPackage(string memory _name, uint  _price,string memory _details) external{
         packages[id].name = _name;
         packages[id].price = _price;
         packages[id].details = _details;
@@ -50,7 +50,7 @@ contract Seller{
         id++;
    }
 
-   function getPackage(uint _id) public view 
+   function getPackage(uint _id) external view 
    returns(uint index, string memory name, uint  price,string memory details, string memory status){
         return(
         _id,
@@ -59,13 +59,13 @@ contract Seller{
         packages[_id].details,
         packages[_id].status);
    }
-   function getCurrentOwer(uint _id) public view 
+   function getCurrentOwer(uint _id) external view 
    returns(string memory _details){
         return(
         packages[_id].status);
    }
     //get package selled for shipper
-    function getPackageSelledForShipper(uint _id) public view 
+    function getPackageSelledForShipper(uint _id) external view 
     returns(uint index, string memory _name, uint  _price,string memory address_delivery, string memory status){
         //require(mapping_seller_deposit[_id] != 0x0000000000000000000000000000000000000000,"Package was not bought");
         if(mapping_seller_deposit[_id] != 0x0000000000000000000000000000000000000000)
@@ -78,7 +78,7 @@ contract Seller{
             return( 0, "", 0, "", "");
     }
     //get package selled for seller
-    function getPackageSelled(uint _id) public view 
+    function getPackageSelled(uint _id) external view 
     returns(uint index, string memory _name, uint  _price,string memory address_delivery, string memory details, string memory status){
     //    require(mapping_buyer[_id] != 0x0000000000000000000000000000000000000000,"Package was not bought");
         if(mapping_buyer[_id] != 0x0000000000000000000000000000000000000000)
@@ -94,7 +94,7 @@ contract Seller{
             return(0, "", 0, "", "", "");
     }
     //get package for verify
-    function getPackageVerifier(uint _id) public view 
+    function getPackageVerifier(uint _id) external view 
     returns(uint index, string memory _name, uint  _price,string memory _details,
             uint out0, uint out1){
         // require(mapping_buyer[_id] != 0x0000000000000000000000000000000000000000,"Package was not bought"); 
@@ -113,45 +113,45 @@ contract Seller{
     }
 
 
-    function getTotalPackage() public view 
+    function getTotalPackage() external view 
     returns(uint total_packages){
             return(id);
     }
      //get address buyer deposit
-    function getBuyerDepositAddress(uint _id) public view returns(address payable){
+    function getBuyerDepositAddress(uint _id) external view returns(address payable){
         return mapping_buyer_deposit[_id];
     }
     //get address verifier content verifiTx
-    function getAddressVerifier(uint _id) public view returns(address){
+    function getAddressVerifier(uint _id) external view returns(address){
         return mapping_verifyTx[_id];
     }
     //get address seller_deposit_to
-    function getSellerDepositAddress(uint _id) public view returns(address payable){
+    function getSellerDepositAddress(uint _id) external view returns(address payable){
         return mapping_seller_deposit[_id];
     }
     //get address seller_deposit_to
-    function setSellerDepositAddress(uint _id, address payable _address) public{
+    function setSellerDepositAddress(uint _id, address payable _address) external{
         mapping_seller_deposit[_id] = _address;
         packages[_id].status = "Selled";
     }
     
     //get address seller_deposit_to
-    function getShipperrDepositAddress(uint _id) public view returns(address payable){
+    function getShipperrDepositAddress(uint _id) external view returns(address payable){
         return mapping_shipper_deposit[_id];
     }
     //get address seller_deposit_to
-    function setShipperDepositAddress(uint _id, address payable _address) public{
+    function setShipperDepositAddress(uint _id, address payable _address) external{
         mapping_shipper_deposit[_id] = _address;
         packages[_id].status = "Ship";
     } 
     //get id buyerItem, return address in Ethereum
-    function getBuyerAddress(uint _id) public view returns(address){
+    function getBuyerAddress(uint _id) external view returns(address){
         require(id > _id);
         return(mapping_buyer[_id]);
     }
 
     //get set out0, out1
-    function setOutput(uint _id, uint _out0, uint _out1) public returns(bool){
+    function setOutput(uint _id, uint _out0, uint _out1) external returns(bool){
         if(_out0 > 0 && _out1 > 0){
             output_zksnarks[_id].output_0 = _out1;
              output_zksnarks[_id].output_1 = _out1;
@@ -160,7 +160,7 @@ contract Seller{
         return(false);
     }
     //get address seller_deposit_to
-    function getOutput(uint _id) public view returns(uint _out0, uint _out1){
+    function getOutput(uint _id) external view returns(uint _out0, uint _out1){
         return( output_zksnarks[_id].output_0,  output_zksnarks[_id].output_1);
     }
 
@@ -168,7 +168,7 @@ contract Seller{
     //_address is address will delivery to
     function buyItem(uint _id,string memory _address, address _address_verifyTx,
     address payable _address_buyer_deposit, uint _out0, uint _out1) 
-    public returns(string memory _name, uint  _price,string memory _details, string memory _address_real){
+    external returns(string memory _name, uint  _price,string memory _details, string memory _address_real){
         //require Package available
         require(packages[_id].price > 0,"Package unavailable");
         //make sure no one buy it before
@@ -237,7 +237,7 @@ contract Seller{
     //     return flag_buyer[_id];
     // }
     //set flag buyer
-    function setFlagBuyer(uint _id, uint _flag) public{
+    function setFlagBuyer(uint _id, uint _flag) external{
         flag_buyer[_id] = _flag;
         //1 ok
         //2 shipperF
@@ -256,7 +256,7 @@ contract Seller{
     //     return flag_shipper[_id];
     // }
     //set flag buyer
-    function setFlagShipper(uint _id, uint _flag) public{
+    function setFlagShipper(uint _id, uint _flag) external{
         flag_shipper[_id] = _flag;
         //1 ok
         //2 shipperF
@@ -275,7 +275,7 @@ contract Seller{
     //     return flag_shipper[_id];
     // }
     //set flag buyer
-    function setFlagSeller(uint _id, uint _flag) public{
+    function setFlagSeller(uint _id, uint _flag) external{
         flag_seller[_id] = _flag;
         //1 ok
         //2 shipperF
@@ -289,14 +289,14 @@ contract Seller{
         }       
     }
 
-    function setShipperOwner(uint _id) public{
+    function setShipperOwner(uint _id) external{
         packages[_id].status = "Shipper";
     }
 
-    function setDone(uint _id) public{
+    function setDone(uint _id) external{
         packages[_id].status = "Done";
     }
-    function resetPakcageData(uint _id) public{
+    function resetPakcageData(uint _id) external{
         packages[_id].name = "";
         packages[_id].price = 0;
         packages[_id].details = "";

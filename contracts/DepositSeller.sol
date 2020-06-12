@@ -23,17 +23,17 @@ contract DepositSeller {
        return  balances[owner];    
     }
 
-    function getowner() public view returns(address payable) {
+    function getowner() external view returns(address payable) {
        return owner;    
     }
 
     //refund full money to owner
-    function refundToSellerTrue() onlySellerContract payable public {
+    function refundToSellerTrue() onlySellerContract payable external {
         owner.transfer(getEther());
         balances[owner] -= getEther();
     }
     //refund full money to owner Fail
-    function refundToSellerFail() onlySellerContract payable public {
+    function refundToSellerFail() onlySellerContract payable external {
         owner.transfer(getEther());
         balances[owner] -= getEther();
     }

@@ -20,9 +20,7 @@ contract DepositBuyer {
 
     }
     
-    
-    
-    function getowner() public view returns(address payable) {
+    function getowner() external view returns(address payable) {
         // require(msg.sender==owner);
         return owner;    
     }

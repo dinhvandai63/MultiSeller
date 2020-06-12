@@ -22,12 +22,12 @@ contract DepositShipper {
        return balances[owner];    
     }
     //return address owner
-    function getOwer() public view returns(address payable) {
+    function getOwer() external view returns(address payable) {
        return owner;    
     }
     
     //refund full money to owner, and seller if sesssion successs
-    function refundToShipperAndSellerTrue() onlySellerContract payable public {
+    function refundToShipperAndSellerTrue() onlySellerContract payable external {
         // require(msg.sender==owner, "wrong address");
         uint balance_to_shipper;
         uint shipper_balance = getEther();
@@ -41,7 +41,7 @@ contract DepositShipper {
     }
     
     //shiper failse
-    function refundToSellerAndBuyerSHF() onlySellerContract payable public {
+    function refundToSellerAndBuyerSHF() onlySellerContract payable external {
         // require(msg.sender==owner, "wrong address");
         //send to seller
         uint e_to_seller;
@@ -61,7 +61,7 @@ contract DepositShipper {
     }
     
     //shiper failse
-    function refundToShipper() onlySellerContract payable public {
+    function refundToShipper() onlySellerContract payable external {
         // require(msg.sender==owner, "wrong address");
         //send to seller
         owner.transfer(getEther());
