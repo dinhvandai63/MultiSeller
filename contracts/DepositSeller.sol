@@ -5,17 +5,17 @@ import './DepositShipper.sol';
 contract DepositSeller {
     //owner is address seller
     address payable owner;
-    address private contract_seller;    
+    address private contractSeller;    
     mapping (address => uint) private balances;
     //_address is address real in the world, ship will tranfer packeage to
     modifier onlySellerContract{
-        require(msg.sender == contract_seller);
+        require(msg.sender == contractSeller);
         _;
     }
     
     constructor(address _contract_seller) payable public {
         owner = msg.sender;    
-        contract_seller = _contract_seller;
+        contractSeller = _contract_seller;
         balances[msg.sender] = msg.value;
     }
 

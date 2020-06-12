@@ -3,11 +3,11 @@ contract DepositBuyer {
     address payable private owner;
     address payable private seller;
     address payable private shipper;
-    address private contract_seller;
+    address private contractSeller;
     mapping (address => uint) private balances;
 
     modifier onlySellerContract{
-        require(msg.sender == contract_seller);
+        require(msg.sender == contractSeller);
         _;
     }
     constructor(address payable _seller, address payable _shipper, address _contract_seller) payable public {
@@ -15,7 +15,7 @@ contract DepositBuyer {
         seller = _seller;
         shipper = _shipper;
         //addres main contract
-        contract_seller = _contract_seller;
+        contractSeller = _contract_seller;
         balances[msg.sender] = msg.value;
 
     }
