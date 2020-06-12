@@ -51,7 +51,7 @@ contract DepositShipper {
         // 30% = (value / 130) * 30
         // 30% = value * (30/130)
         e_to_seller = (shipper_balance*15)/130;
-        e_ower = shipper_balance - 2*e_to_seller;
+        e_ower = (shipper_balance*115)/130;
         balances[owner] = 0;
         seller.transfer(e_to_seller);
         buyer.transfer(e_to_seller);

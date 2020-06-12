@@ -39,73 +39,73 @@ contract Seller{
     constructor() public payable{
         seller = msg.sender;    
     }  
-   function setPackage(string memory name, uint  price,string memory Details) external{
+   function setPackage(string memory name, uint  price,string memory details) external{
         packages[id].name = name;
         packages[id].price = price;
-        packages[id].details = Details;
+        packages[id].details = details;
         packages[id].status = "Sell";
         if(id == 1e18){
-            id=0;
+            id = 0;
         }
         id++;
    }
 
-   function getPackage(uint id) external view 
+   function getPackage(uint idPackage) external view 
    returns(uint index, string memory name, uint  price,string memory details, string memory status){
         return(
-        id,
-        packages[id].name,
-        packages[id].price,
-        packages[id].details,
-        packages[id].status);
+        idPackage,
+        packages[idPackage].name,
+        packages[idPackage].price,
+        packages[idPackage].details,
+        packages[idPackage].status);
    }
-   function getCurrentOwer(uint id) external view 
-   returns(string memory Details){
+   function getCurrentOwer(uint idPackage) external view 
+   returns(string memory details){
         return(
-        packages[id].status);
+        packages[idPackage].status);
    }
     //get package selled for shipper
-    function getPackageSelledForShipper(uint id) external view 
+    function getPackageSelledForShipper(uint idPackage) external view 
     returns(uint index, string memory name, uint  price,string memory address_delivery, string memory status){
-        //require(mappingSellerDeposit[id] != 0x0000000000000000000000000000000000000000,"Package was not bought");
-        if(mappingSellerDeposit[id] != address(0x0))
-            return( id,
-                packages[id].name,
-                packages[id].price,
-                packages[id].address_delivery,
-                packages[id].status);
+        //require(mappingSellerDeposit[idPackage] != 0x0000000000000000000000000000000000000000,"Package was not bought");
+        if(mappingSellerDeposit[idPackage] != address(0x0))
+            return( idPackage,
+                packages[idPackage].name,
+                packages[idPackage].price,
+                packages[idPackage].address_delivery,
+                packages[idPackage].status);
         else
             return( 0, "", 0, "", "");
     }
     //get package selled for seller
-    function getPackageSelled(uint id) external view 
+    function getPackageSelled(uint idPackage) external view 
     returns(uint index, string memory name, uint  price,string memory address_delivery, string memory details, string memory status){
-    //    require(mappingBuyer[id] != 0x0000000000000000000000000000000000000000,"Package was not bought");
-        if(mappingBuyer[id] != address(0x0))
+    //    require(mappingBuyer[idPackage] != 0x0000000000000000000000000000000000000000,"Package was not bought");
+        if(mappingBuyer[idPackage] != address(0x0))
             return(
-            id,
-            packages[id].name,
-            packages[id].price,
-            packages[id].address_delivery,
-            packages[id].details,
-            packages[id].status
+            idPackage,
+            packages[idPackage].name,
+            packages[idPackage].price,
+            packages[idPackage].address_delivery,
+            packages[idPackage].details,
+            packages[idPackage].status
             );
         else
             return(0, "", 0, "", "", "");
     }
     //get package for verify
-    function getPackageVerifier(uint id) external view 
-    returns(uint index, string memory name, uint  price,string memory Details,
+    function getPackageVerifier(uint idPackage) external view 
+    returns(uint index, string memory name, uint  price,string memory details,
             uint out0, uint out1){
-        // require(mappingBuyer[id] != 0x0000000000000000000000000000000000000000,"Package was not bought"); 
-        if(id<1e18){
+        // require(mappingBuyer[idPackage] != 0x0000000000000000000000000000000000000000,"Package was not bought"); 
+        if(idPackage<1e18){
             return(
-            id,
-            packages[id].name,
-            packages[id].price,
-            packages[id].details,
-            outputZksnarks[id].output_0,
-            outputZksnarks[id].output_1);
+            idPackage,
+            packages[idPackage].name,
+            packages[idPackage].price,
+            packages[idPackage].details,
+            outputZksnarks[idPackage].output_0,
+            outputZksnarks[idPackage].output_1);
         }else{
             return(0,"",0,"",0,0);
         }
@@ -118,82 +118,82 @@ contract Seller{
             return(id);
     }
      //get address buyer deposit
-    function getBuyerDepositAddress(uint id) external view returns(address payable){
-        return mappingBuyerDeposit[id];
+    function getBuyerDepositAddress(uint idPackage) external view returns(address payable){
+        return mappingBuyerDeposit[idPackage];
     }
     //get address verifier content verifiTx
-    function getAddressVerifier(uint id) external view returns(address){
-        return mappingVerifyTx[id];
+    function getAddressVerifier(uint idPackage) external view returns(address){
+        return mappingVerifyTx[idPackage];
     }
     //get address seller_deposit_to
-    function getSellerDepositAddress(uint id) external view returns(address payable){
-        return mappingSellerDeposit[id];
+    function getSellerDepositAddress(uint idPackage) external view returns(address payable){
+        return mappingSellerDeposit[idPackage];
     }
     //get address seller_deposit_to
-    function setSellerDepositAddress(uint id, address payable addressSellerDeposit) external{
-        mappingSellerDeposit[id] = addressSellerDeposit;
-        packages[id].status = "Selled";
+    function setSellerDepositAddress(uint idPackage, address payable addressSellerDeposit) external{
+        mappingSellerDeposit[idPackage] = addressSellerDeposit;
+        packages[idPackage].status = "Selled";
     }
     
     //get address seller_deposit_to
-    function getShipperrDepositAddress(uint id) external view returns(address payable){
-        return mappingShipperDeposit[id];
+    function getShipperrDepositAddress(uint idPackage) external view returns(address payable){
+        return mappingShipperDeposit[idPackage];
     }
     //get address seller_deposit_to
-    function setShipperDepositAddress(uint id, address payable addressSellerDeposit) external{
-        mappingShipperDeposit[id] = addressSellerDeposit;
-        packages[id].status = "Ship";
+    function setShipperDepositAddress(uint idPackage, address payable addressSellerDeposit) external{
+        mappingShipperDeposit[idPackage] = addressSellerDeposit;
+        packages[idPackage].status = "Ship";
     } 
-    //get id buyerItem, return address in Ethereum
-    function getBuyerAddress(uint id) external view returns(address){
-        require(id > id);
-        return(mappingBuyer[id]);
+    //get idPackage buyerItem, return address in Ethereum
+    function getBuyerAddress(uint idPackage) external view returns(address){
+        require(idPackage > idPackage);
+        return(mappingBuyer[idPackage]);
     }
 
     //get set out0, out1
-    function setOutput(uint id, uint out0, uint out1) external returns(bool){
+    function setOutput(uint idPackage, uint out0, uint out1) external returns(bool){
         if(out0 > 0 && out1 > 0){
-            outputZksnarks[id].output_0 = out1;
-             outputZksnarks[id].output_1 = out1;
+            outputZksnarks[idPackage].output_0 = out1;
+             outputZksnarks[idPackage].output_1 = out1;
             return(true);
         }
         return(false);
     }
     //get address seller_deposit_to
-    function getOutput(uint id) external view returns(uint out0, uint out1){
-        return( outputZksnarks[id].output_0,  outputZksnarks[id].output_1);
+    function getOutput(uint idPackage) external view returns(uint out0, uint out1){
+        return( outputZksnarks[idPackage].output_0,  outputZksnarks[idPackage].output_1);
     }
 
     //start buyer action
     //addressSellerDeposit is address will delivery to
-    function buyItem(uint id,string memory addressSellerDeposit, address addressVerifyTx,
+    function buyItem(uint idPackage,string memory addressSellerDeposit, address addressVerifyTx,
     address payable addressBuyerDeposit, uint out0, uint out1) 
-    external returns(string memory name, uint  price,string memory Details, string memory _address_real){
+    external returns(string memory name, uint  price,string memory details, string memory _address_real){
         //require Package available
-        require(packages[id].price > 0,"Package unavailable");
+        require(packages[idPackage].price > 0,"Package unavailable");
         //make sure no one buy it before
-        require(mappingBuyer[id] == address(0x0),"Package bought");
+        require(mappingBuyer[idPackage] == address(0x0),"Package bought");
        
-        mappingBuyer[id] = msg.sender;
-        packages[id].address_delivery = addressSellerDeposit;
-        mappingVerifyTx[id] = addressVerifyTx;
-        mappingBuyerDeposit[id] = addressBuyerDeposit;
-        outputZksnarks[id].output_0 = out0;
-        outputZksnarks[id].output_1 = out1;
+        mappingBuyer[idPackage] = msg.sender;
+        packages[idPackage].address_delivery = addressSellerDeposit;
+        mappingVerifyTx[idPackage] = addressVerifyTx;
+        mappingBuyerDeposit[idPackage] = addressBuyerDeposit;
+        outputZksnarks[idPackage].output_0 = out0;
+        outputZksnarks[idPackage].output_1 = out1;
 
-        packages[id].status = "Bought";
+        packages[idPackage].status = "Bought";
         return(
-            packages[id].name,
-            packages[id].price,
-            packages[id].details,
+            packages[idPackage].name,
+            packages[idPackage].price,
+            packages[idPackage].details,
             addressSellerDeposit);
     }
     
      //run address seller_deposit_to
-    function runRefundTrue(uint id) public{
-        address payable seller_deposit_temp = mappingSellerDeposit[id];
-        address payable buyer_deposit_temp =  mappingBuyerDeposit[id];
-        address payable shipper_deposit_temp =  mappingShipperDeposit[id];
+    function runRefundTrue(uint idPackage) public{
+        address payable seller_deposit_temp = mappingSellerDeposit[idPackage];
+        address payable buyer_deposit_temp =  mappingBuyerDeposit[idPackage];
+        address payable shipper_deposit_temp =  mappingShipperDeposit[idPackage];
         //refund seller
         DepositSeller(seller_deposit_temp).refundToSellerTrue();
         //refund buyer
@@ -203,10 +203,10 @@ contract Seller{
     }
     
     //run address seller_deposit_to
-    function runRefundShipperFail(uint id) public{
-        address payable seller_deposit_temp = mappingSellerDeposit[id];
-        address payable buyer_deposit_temp =  mappingBuyerDeposit[id];
-        address payable shipper_deposit_temp =  mappingShipperDeposit[id];
+    function runRefundShipperFail(uint idPackage) public{
+        address payable seller_deposit_temp = mappingSellerDeposit[idPackage];
+        address payable buyer_deposit_temp =  mappingBuyerDeposit[idPackage];
+        address payable shipper_deposit_temp =  mappingShipperDeposit[idPackage];
         //refund seller
         DepositSeller(seller_deposit_temp).refundToSellerTrue();
         //refund buyer
@@ -217,10 +217,10 @@ contract Seller{
     
     
     //run address seller_deposit_to
-    function runRefundBuyerFail(uint id) public{
-        address payable seller_deposit_temp = mappingSellerDeposit[id];
-        address payable buyer_deposit_temp =  mappingBuyerDeposit[id];
-        address payable shipper_deposit_temp =  mappingShipperDeposit[id];
+    function runRefundBuyerFail(uint idPackage) public{
+        address payable seller_deposit_temp = mappingSellerDeposit[idPackage];
+        address payable buyer_deposit_temp =  mappingBuyerDeposit[idPackage];
+        address payable shipper_deposit_temp =  mappingShipperDeposit[idPackage];
 
 
         //refund seller
@@ -233,72 +233,72 @@ contract Seller{
     
       
      //get flag buyer
-    // function getFlagBuyer(uint id) public view returns(memory string value){
-    //     return flagBuyer[id];
+    // function getFlagBuyer(uint idPackage) public view returns(memory string value){
+    //     return flagBuyer[idPackage];
     // }
     //set flag buyer
-    function setFlagBuyer(uint id, uint flag) external{
-        flagBuyer[id] = flag;
+    function setFlagBuyer(uint idPackage, uint flag) external{
+        flagBuyer[idPackage] = flag;
         //1 ok
         //2 shipperF
         //3 buyerF
-        if(flagBuyer[id]==1 && flagShipper[id]==1 && flagSeller[id]==1){
-            runRefundTrue(id);
-        }else if(flagBuyer[id]==2 && flagSeller[id]==2){
-            runRefundShipperFail(id);
-        }else if(flagShipper[id]==3 && flagSeller[id]==3){
-            runRefundBuyerFail(id);
+        if(flagBuyer[idPackage]==1 && flagShipper[idPackage]==1 && flagSeller[idPackage]==1){
+            runRefundTrue(idPackage);
+        }else if(flagBuyer[idPackage]==2 && flagSeller[idPackage]==2){
+            runRefundShipperFail(idPackage);
+        }else if(flagShipper[idPackage]==3 && flagSeller[idPackage]==3){
+            runRefundBuyerFail(idPackage);
         }    
     }
 
      //get flag buyer
-    // function getFlagShipper(uint id) public view returns(bool){
-    //     return flagShipper[id];
+    // function getFlagShipper(uint idPackage) public view returns(bool){
+    //     return flagShipper[idPackage];
     // }
     //set flag buyer
-    function setFlagShipper(uint id, uint flag) external{
-        flagShipper[id] = flag;
+    function setFlagShipper(uint idPackage, uint flag) external{
+        flagShipper[idPackage] = flag;
         //1 ok
         //2 shipperF
         //3 buyerF
-        if(flagBuyer[id]==1 && flagShipper[id]==1 && flagSeller[id]==1){
-            runRefundTrue(id);
-        }else if(flagBuyer[id]==2 && flagSeller[id]==2){
-            runRefundShipperFail(id);
-        }else if(flagShipper[id]==3 && flagSeller[id]==3){
-            runRefundBuyerFail(id);
+        if(flagBuyer[idPackage]==1 && flagShipper[idPackage]==1 && flagSeller[idPackage]==1){
+            runRefundTrue(idPackage);
+        }else if(flagBuyer[idPackage]==2 && flagSeller[idPackage]==2){
+            runRefundShipperFail(idPackage);
+        }else if(flagShipper[idPackage]==3 && flagSeller[idPackage]==3){
+            runRefundBuyerFail(idPackage);
         }       
     }
 
      //get flag buyer
-    // function getFlagShipper(uint id) public view returns(bool){
-    //     return flagShipper[id];
+    // function getFlagShipper(uint idPackage) public view returns(bool){
+    //     return flagShipper[idPackage];
     // }
     //set flag buyer
-    function setFlagSeller(uint id, uint flag) external{
-        flagSeller[id] = flag;
+    function setFlagSeller(uint idPackage, uint flag) external{
+        flagSeller[idPackage] = flag;
         //1 ok
         //2 shipperF
         //3 buyerF
-        if(flagBuyer[id]==1 && flagShipper[id]==1 && flagSeller[id]==1){
-            runRefundTrue(id);
-        }else if(flagBuyer[id]==2 && flagSeller[id]==2){
-            runRefundShipperFail(id);
-        }else if(flagShipper[id]==3 && flagSeller[id]==3){
-            runRefundBuyerFail(id);
+        if(flagBuyer[idPackage]==1 && flagShipper[idPackage]==1 && flagSeller[idPackage]==1){
+            runRefundTrue(idPackage);
+        }else if(flagBuyer[idPackage]==2 && flagSeller[idPackage]==2){
+            runRefundShipperFail(idPackage);
+        }else if(flagShipper[idPackage]==3 && flagSeller[idPackage]==3){
+            runRefundBuyerFail(idPackage);
         }       
     }
 
-    function setShipperOwner(uint id) external{
-        packages[id].status = "Shipper";
+    function setShipperOwner(uint idPackage) external{
+        packages[idPackage].status = "Shipper";
     }
 
-    function setDone(uint id) external{
-        packages[id].status = "Done";
+    function setDone(uint idPackage) external{
+        packages[idPackage].status = "Done";
     }
-    function resetPakcageData(uint id) external{
-        packages[id].name = "";
-        packages[id].price = 0;
-        packages[id].details = "";
+    function resetPakcageData(uint idPackage) external{
+        packages[idPackage].name = "";
+        packages[idPackage].price = 0;
+        packages[idPackage].details = "";
     }
 }

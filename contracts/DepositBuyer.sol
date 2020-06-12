@@ -40,9 +40,10 @@ contract DepositBuyer {
         // require(msg.sender==owner, "wrong address");
         //send buyer 50%
         uint eOwner = getEther()/2;
-        seller.transfer(eOwner/2);
         balances[owner] = 0;
+
+        seller.transfer(eOwner);
         //send shipper 50%
-        shipper.transfer(eOwner/2);
+        shipper.transfer(eOwner);
     }
 }
