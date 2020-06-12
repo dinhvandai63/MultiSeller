@@ -1,4 +1,4 @@
-pragma solidity  ^0.6.1;
+pragma solidity >=0.4.19 <0.7.0;
 contract DepositBuyer {
     address payable private owner;
     address payable private seller;
@@ -7,12 +7,11 @@ contract DepositBuyer {
     mapping (address => uint) private balances;
 
     modifier onlySellerContract{
-        require(msg.sender == contract_seller, "seller only");
+        require(msg.sender == contract_seller);
         _;
     }
     constructor(address payable _seller, address payable _shipper, address _contract_seller) payable public {
-        owner = msg.sender; 
-
+        owner = msg.sender;    
         seller = _seller;
         shipper = _shipper;
         //addres main contract
@@ -21,12 +20,11 @@ contract DepositBuyer {
 
     }
     
-
+    
+    
     function getowner() public view returns(address payable) {
         // require(msg.sender==owner);
-        
         return owner;    
-
     }
 
     function getEther() private view returns(uint) {

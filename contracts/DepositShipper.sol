@@ -1,4 +1,4 @@
-pragma solidity  ^0.6.1;
+pragma solidity >=0.4.19 <0.7.0;
 contract DepositShipper {
     address payable private owner;
     address payable private seller;    
