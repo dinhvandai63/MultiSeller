@@ -28,6 +28,7 @@ contract Seller{
     mapping(uint => Package) packages;
     mapping(uint => address payable) mapping_buyer;
     mapping(uint => address) mapping_verifyTx;
+    
     mapping(uint => address payable) mapping_seller_deposit;
     mapping(uint => address payable) mapping_buyer_deposit;
     mapping(uint => address payable) mapping_shipper_deposit;

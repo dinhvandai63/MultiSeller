@@ -4,8 +4,8 @@ import './DepositShipper.sol';
 contract DepositSeller {
     //owner is address seller
     address payable owner;
-    address public contract_seller;    
-    mapping (address => uint) public balances;
+    address private contract_seller;    
+    mapping (address => uint) private balances;
     //_address is address real in the world, ship will tranfer packeage to
     modifier onlySellerContract{
         require(msg.sender == contract_seller);
@@ -18,7 +18,7 @@ contract DepositSeller {
         balances[msg.sender] = msg.value;
     }
 
-    function getEther() public view returns(uint) {
+    function getEther() private view returns(uint) {
        return  balances[owner];    
     }
 

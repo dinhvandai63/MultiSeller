@@ -1,10 +1,10 @@
 pragma solidity  ^0.6.1;
 contract DepositShipper {
-    address payable public owner;
-    address payable public seller;    
-    address payable public buyer;  
-    address public contract_seller;  
-    mapping (address => uint) public balances;
+    address payable private owner;
+    address payable private seller;    
+    address payable private buyer;  
+    address private contract_seller;  
+    mapping (address => uint) private balances;
     
     modifier onlySellerContract{
         require(msg.sender == contract_seller);
@@ -18,7 +18,7 @@ contract DepositShipper {
         balances[msg.sender] = msg.value;
     }
     
-    function getEther() public view returns(uint) {
+    function getEther() private view returns(uint) {
        return balances[owner];    
     }
     //return address owner

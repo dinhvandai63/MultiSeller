@@ -26,3 +26,6 @@ proof.json
 #test
 test
 client/webpacks/index.js
+#vs
+.vscode/
+bin/

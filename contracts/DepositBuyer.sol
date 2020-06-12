@@ -1,17 +1,18 @@
 pragma solidity  ^0.6.1;
 contract DepositBuyer {
-    address payable public owner;
-    address payable public seller;
-    address payable public shipper;
-    address public contract_seller;
-    mapping (address => uint) public balances;
+    address payable private owner;
+    address payable private seller;
+    address payable private shipper;
+    address private contract_seller;
+    mapping (address => uint) private balances;
 
     modifier onlySellerContract{
-        require(msg.sender == contract_seller);
+        require(msg.sender == contract_seller, "seller only");
         _;
     }
     constructor(address payable _seller, address payable _shipper, address _contract_seller) payable public {
-        owner = msg.sender;    
+        owner = msg.sender; 
+
         seller = _seller;
         shipper = _shipper;
         //addres main contract
@@ -20,14 +21,15 @@ contract DepositBuyer {
 
     }
     
-    
-    
+
     function getowner() public view returns(address payable) {
         // require(msg.sender==owner);
+        
         return owner;    
+
     }
 
-    function getEther() public view returns(uint) {
+    function getEther() private view returns(uint) {
        return  balances[owner];    
     }
     //refund full money to owner
