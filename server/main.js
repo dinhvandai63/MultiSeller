@@ -239,7 +239,9 @@ async function writeSellerValue(package) {
   let obj = {
     table: []
   };
-
+  if(package_temp.id == 0){
+    await sh_zokrates('rm packages.json');
+  }
   fs.exists('packages.json', function (exists) {
     if (exists) {
       console.log("yes file exists");
