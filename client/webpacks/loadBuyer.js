@@ -96,10 +96,14 @@ App = {
                     App.id_item = index_package;
                     
                     let url_parameter_item = App.id_item + "/" + $name + "/" + $price + "/" + $details;
+
+                    var t0 = performance.now()
                     req.open("get", "http://localhost:3000/buyitem/" + url_parameter_item, false);
                     req.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
                     req.send();
                     //receive response from server local, output0, output1
+                    var t1 = performance.now()
+                    console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
                     let obj = JSON.parse(req.responseText);
                    
@@ -159,10 +163,15 @@ App = {
 
 
 			//add div
+		  	var div_seller_main = document.createElement("div"); 
+		  	div_seller_main.className = "col-4 px-0 mt-0 p-3"
+            div_seller_main.id = "seller_main"+i;
+            document.body.appendChild(div_seller_main); 
+            
+			//add div
 		  	var div_seller = document.createElement("div"); 
-		  	div_seller.className = "mycard col-4 px-0 mt-0 mx-3"
+		  	div_seller.className = "mycard mt-0"
 			div_seller.id = "seller"+i;
-			document.body.appendChild(div_seller); 
 
 			//add name, price, detail, btnBuy
 			var h1_name = document.createElement("h1");
@@ -194,7 +203,8 @@ App = {
 			button_buy.id = "btnBuy"+i;	
 			button_buy.innerHTML = "Buy";
 
-			document.getElementById("seller").appendChild(div_seller)
+            document.getElementById("seller").appendChild(div_seller_main)
+			document.getElementById(div_seller_main.id).appendChild(div_seller)
 			document.getElementById(div_seller.id).appendChild(h1_name);
 			document.getElementById(div_seller.id).appendChild(p_price);
 			document.getElementById(div_seller.id).appendChild(p_details);
