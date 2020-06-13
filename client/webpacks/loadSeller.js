@@ -545,7 +545,8 @@ AppVerifier = {
                     status.then(
                         // Log the fulfillment value
                         function(val) {    
-                            alert("this status verifiTx: " + val);
+                            alert("this status verifiTx: " + val.receipt.status);
+                            console.log(val);
                         })
                     .catch(
                         // Log the rejection reason
