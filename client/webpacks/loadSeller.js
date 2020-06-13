@@ -225,11 +225,15 @@ App = {
             if(packages[0][0]==undefined){
                 break;
             }
-			//add div
+            //add div
+            var div_seller_main = document.createElement("div"); 
+            div_seller_main.className = "col-4 px-0 mt-0 p-3"
+			div_seller_main.id = "seller_main"+i;
+			document.body.appendChild(div_seller_main);
+
 		  	var div_seller = document.createElement("div"); 
-		  	div_seller.className = "mycard col-4 px-0 mt-0 mx-3"
+		  	div_seller.className = "mycard mt-0"
 			div_seller.id = "seller"+i;
-			document.body.appendChild(div_seller); 
 
 			//add name, price, detail, btnBuy
 			var h1_name = document.createElement("h1");
@@ -271,7 +275,8 @@ App = {
 			button_verify.id = "SellerConfirm_btnConfirmVerifyTx"+i;	
             button_verify.innerHTML = "Verify";
             
-            document.getElementById("seller").appendChild(div_seller)
+            document.getElementById("seller").appendChild(div_seller_main)
+            document.getElementById(div_seller_main.id).appendChild(div_seller)
 			document.getElementById(div_seller.id).appendChild(h1_name);
 			document.getElementById(div_seller.id).appendChild(p_price);
             document.getElementById(div_seller.id).appendChild(p_details);
@@ -337,9 +342,10 @@ App = {
             req.open("get", "http://localhost:3000/read-infor-package/" + url_parameter_item, false);
             req.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
             req.send();
+            
             //receive response from server local, output0, output1
             var obj = JSON.parse(req.responseText);
-
+     
             console.log("step 4"+index_package)
             let id = App.package_verifier_p[0];
             let name = App.package_verifier_p[1];
@@ -351,9 +357,14 @@ App = {
             ///send request to server run zokrates to create proof
             url_parameter_item = id + "/" + name + "/" + price +
                 "/" + details + "/" + out0 + "/" + out1;
+            var t0 = performance.now()
             req.open("get", "http://localhost:3000/runverifyTx/" + url_parameter_item, false);
             req.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
             req.send();
+            var t1 = performance.now()
+            console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+            
+            console.log(req.responseText)
             //receive response from server local, output0, output1
             obj = JSON.parse(req.responseText);
             ///read proof

@@ -16,19 +16,43 @@
         $(function () {
             $("#header_").load("header.html");
         });
+        function showHide(){
+            $("#form_create_item").show();
+        }
     </script>
 </head>
 
 <body>
-    <div id="header_"></div>
+    <div class="container">
+        <div id="header_"></div>
+        <div class="col-md-3">
+            <a href="#" onclick="showHide()" class="mt-5 btn main_background btn-lg btn-block btn-huge text-white">Create</a>
+        </div>
 
-    <div class="mt-5">
-        Name: <input type="text" id="Name" placeholder="Name"  style="margin-left: 8px;"/> <br />
-        Price: <input type="text" id="Price" placeholder="Price" style="margin-left: 14px;"/> <br />
-        Details: <input type="text" id="Details" placeholder="Details" /> <br />
-        <input type="button" id="btnAddPackage" value="Add new Package" />
-        <div id="output"></div>
-        <div id="errorHolder"></div>
+        <div id="form_create_item" class="mt-5" style="display: none;">
+            <div class="form-group px-3">
+                <label  for="exampleInputEmail1">Name</label>
+                <input type="text" class="form-control" id="Name" placeholder="Name">
+            </div>
+            <div class="form-group px-3">
+                <label x for="exampleInputEmail1">Price</label>
+                <input type="text" class="form-control" id="Price" aria-describedby="emailHelp" placeholder="Price">
+            </div>
+            <div class="form-group px-3">
+                <label  for="exampleInputEmail1">Price</label>
+                <input type="text" class="form-control" id="Details" aria-describedby="emailHelp" placeholder="Details">
+            </div>
+            <div class="col-md-3 d-flex">
+                <div class="px-3">
+                    <a href="#" id="btnAddPackage" onclick="" class="mt-5 btn main_background btn-lg btn-block btn-huge text-white">Add new Package</a>
+                </div>
+                <div class="px-3">
+                    <a href="#" id="" onclick="$('#form_create_item').hide()" class="mt-5 btn main_background btn-lg btn-block btn-huge text-white">Cancel</a>
+                </div>
+            </div>
+            <div id="output"></div>
+            <div id="errorHolder"></div>
+        </div>
     </div>
 
     <div class="my-5">
