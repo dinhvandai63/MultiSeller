@@ -166,7 +166,7 @@ contract Seller{
 
     //start buyer action
     //addressSellerDeposit is address will delivery to
-    function buyItem(uint idPackage,string calldata addressSellerDeposit, address addressVerifyTx,
+    function buyItem(uint idPackage,string calldata addressDelivery, address addressVerifyTx,
     address payable addressBuyerDeposit, uint out0, uint out1) 
     external returns(string memory name, uint  price,string memory details, string memory _address_real){
         //require Package available
@@ -175,7 +175,7 @@ contract Seller{
         require(mappingBuyer[idPackage] == address(0x0),"Package bought");
        
         mappingBuyer[idPackage] = msg.sender;
-        packages[idPackage].address_delivery = addressSellerDeposit;
+        packages[idPackage].address_delivery = addressDelivery;
         mappingVerifyTx[idPackage] = addressVerifyTx;
         mappingBuyerDeposit[idPackage] = addressBuyerDeposit;
         outputZksnarks[idPackage].output_0 = out0;
@@ -186,7 +186,7 @@ contract Seller{
             packages[idPackage].name,
             packages[idPackage].price,
             packages[idPackage].details,
-            addressSellerDeposit);
+            addressDelivery);
     }
     
      //run address seller_deposit_to
