@@ -36,10 +36,10 @@ contract Seller{
         require(msg.sender == seller);
         _;
     }
-    constructor() public payable{
+    constructor() public{
         seller = msg.sender;    
     }  
-   function setPackage(string memory name, uint  price,string memory details) external{
+   function setPackage(string calldata name, uint  price,string calldata details) external{
         packages[id].name = name;
         packages[id].price = price;
         packages[id].details = details;
@@ -166,7 +166,7 @@ contract Seller{
 
     //start buyer action
     //addressSellerDeposit is address will delivery to
-    function buyItem(uint idPackage,string memory addressSellerDeposit, address addressVerifyTx,
+    function buyItem(uint idPackage,string calldata addressSellerDeposit, address addressVerifyTx,
     address payable addressBuyerDeposit, uint out0, uint out1) 
     external returns(string memory name, uint  price,string memory details, string memory _address_real){
         //require Package available
