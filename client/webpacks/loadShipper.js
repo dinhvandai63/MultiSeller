@@ -146,10 +146,15 @@ App = {
                 break;
             }
 			//add div
+		  	var div_seller_main = document.createElement("div"); 
+            div_seller_main.id = "seller_main"+i;
+            div_seller_main.className = "col-4 px-0 mt-0 p-3";            
+            document.body.appendChild(div_seller_main); 
+            
+			//add div
 		  	var div_seller = document.createElement("div"); 
 			div_seller.id = "seller"+i;
-            div_seller.className = "mycard col-4 px-0 mt-0 mx-3";            
-			document.body.appendChild(div_seller); 
+            div_seller.className = "mycard mt-0";            
 
 			//add name, price, detail, btnBuy
 			var h1_name = document.createElement("h1");
@@ -187,7 +192,8 @@ App = {
 			button_check_status.innerHTML = "Check Status";
             
 
-            document.getElementById("seller").appendChild(div_seller)			
+            document.getElementById("seller").appendChild(div_seller_main)			
+            document.getElementById(div_seller_main.id).appendChild(div_seller)			
 			document.getElementById(div_seller.id).appendChild(h1_name);
 			document.getElementById(div_seller.id).appendChild(p_price);
 			document.getElementById(div_seller.id).appendChild(p_shipper_address);
