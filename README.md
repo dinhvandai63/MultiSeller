@@ -1,1 +1,1 @@
-# MultiSeller 2
+# MultiSeller
