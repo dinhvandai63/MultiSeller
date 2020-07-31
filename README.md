@@ -21,8 +21,11 @@ download and run ganache from [ganache](https://www.trufflesuite.com/ganache)
 
 ### nodejs environment
 ```sudo apt install nodejs```
+
 ```sudo apt install npm ```
+
 ```npm install -g truffle ```
+
 ### zokrat for zksnark
 ```curl -LSfs get.zokrat.es | sh```
 
