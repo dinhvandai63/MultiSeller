@@ -1,4 +1,5 @@
 # MultiSeller
+<<<<<<< HEAD
 ## Getting Started
     *introduce project*
 ## Architecture
@@ -33,3 +34,5 @@ download and run ganache from [ganache](https://www.trufflesuite.com/ganache)
 ```truffle migrate```
 ### run project
 ```sudo npm run dev```
+=======
+>>>>>>> b49e7e7ed4776989f4bb52f084a72936412f6c9e
