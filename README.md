@@ -5,31 +5,30 @@
     *architecture project*
 ## compatibility
     
-| Cột 1 Hàng 1 | Cột 2 | Cột 3| Cột 4 |
-|--------------|-------|------|-------|
-| Hàng 2 | 2 x 1 | 2 x 2 | 2 x 3 | 2 x 4 |
-| Hàng 3 | 3 x 1 | 3 x 2 | 3 x 3 | 3 x 4 |
-| Hàng 4 | 4 x 1 | 4 x 2 | 4 x 3 | 4 x 4 |
+|         | Version |
+|---------|---------|
+| nodejs  | 10.21.0 |
+| npm     | 6.14.5  |
+| truffle | 5.1.34  |
+| Solidity| 0.5.16  |
+| Web3    | 1.2.1   |
+| zokrat  | 0.5.3   |
 
-## Setup from sourcecode
-
+## Setup environment
 ### ethereum test network
 download and run ganache from [ganache](https://www.trufflesuite.com/ganache)
-
-### clone source
-```git clone git@github.com:dinhvandai63/MultiSeller.git```
-
-### nodejs environment
+### nodejs
 ```sudo apt install nodejs```
 
 ```sudo apt install npm ```
 
 ```npm install -g truffle ```
-
 ### zokrat for zksnark
 ```curl -LSfs get.zokrat.es | sh```
 
 ## Run project
+### clone source
+```git clone git@github.com:dinhvandai63/MultiSeller.git```
 ### install package nodejs
 ```npm install```
 ### build contract and deploy to ganache
