@@ -3,7 +3,7 @@
     *introduce project*
 ## Architecture
     *architecture project*
-## compatibility
+## Compatibility
     
 |         | Version |
 |---------|---------|
