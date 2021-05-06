@@ -1,4 +1,4 @@
-# MultiSeller
+# ZeroD
 ## Getting Started
     *introduce project*
 ## Architecture
