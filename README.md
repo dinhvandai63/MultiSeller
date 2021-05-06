@@ -28,7 +28,7 @@ download and run ganache from [ganache](https://www.trufflesuite.com/ganache)
 
 ## Run project
 ### clone source
-```git clone git@github.com:dinhvandai63/MultiSeller.git```
+```git clone git@github.com:dinhvandai63/ZeroD.git```
 ### install package nodejs
 ```npm install```
 ### build contract and deploy to ganache
